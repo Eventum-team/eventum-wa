@@ -1,0 +1,26 @@
+.login-form {
+  width: 600px;
+  background: #f8f8f8;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px 1px rgba(0,0,0,0.2);
+}
+
+
+.login-form-forgot {
+  float: right;
+
+}.login-form-button {
+  width: 100%;
+}
+
+
+
+.center-text{
+  text-align: center;
+}
+
+.login-form-button-container{
+  display: flex;
+  justify-content: center;
+}
