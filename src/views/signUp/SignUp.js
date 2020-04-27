@@ -46,7 +46,7 @@ const SignUp = (props) => {
   }, [successful]);
 
   return (
-    <div className="center" style={{ padding: "0 100px" }}>
+    <div className="center">
       <SignUpForm handleSubmit={handleSubmit} pending={pending} error={error} />
     </div>
   );
