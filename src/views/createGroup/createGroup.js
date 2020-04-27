@@ -1,7 +1,9 @@
 import React from "react";
 import CreateGroupForm from "../../components/createGroupForm";
+import MainLayout from "../../components/layout";
 import { Typography, Row, Col } from "antd";
 import { useDispatch, useSelector } from "react-redux";
+import ContentLayout from "../../components/contentLayout";
 import Spinner from "../../components/spinner";
 import ErrorAlert from "../../components/error";
 import Successful from "../../components/succesfulOperation";
@@ -24,7 +26,7 @@ const CreateGroup = (props) => {
   };
 
   return (
-    <>
+    <ContentLayout>
       {pending && <Spinner />}
       {!pending && error && <ErrorAlert error={error} />}
       {!pending && !error && successful && (
@@ -54,7 +56,7 @@ const CreateGroup = (props) => {
           </Row>
         </div>
       )}
-    </>
+    </ContentLayout>
   );
 };
 
