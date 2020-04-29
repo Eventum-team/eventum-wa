@@ -1,7 +1,7 @@
 import React from "react";
 import "antd/dist/antd.css";
 import { Form, Input, Button, Checkbox, Typography, Alert } from "antd";
-import Icon from "@ant-design/icons";
+import  { UserOutlined, LockOutlined} from "@ant-design/icons";
 import Spinner from "../../components/spinner";
 import { Link } from "react-router-dom";
 import "./index.css";
@@ -9,14 +9,18 @@ import "./index.css";
 const { Title } = Typography;
 
 const SignInForm = (props) => {
-  const { handleSubmit, getFieldDecorator, error, pending } = props;
+  const { onFinish, getFieldDecorator, error, pending } = props;
 
   return (
-    <Form onSubmit={handleSubmit} className="login-form">
+    <Form 
+      onFinish={onFinish} 
+      className="login-form"
+    >
       <div className="center-text">
         <Title level={2}>Inicia Sesión</Title>
       </div>
       <Form.Item
+        name="email"
         rules={[
           { required: true, message: "Por favor ingresa tu correo!" },
           {
@@ -25,20 +29,21 @@ const SignInForm = (props) => {
           },
         ]}
       >
-        <Input
-          prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />}
-          placeholder="Correo"
+        <Input 
+          prefix={<UserOutlined className="site-form-item-icon" />} 
+          placeholder="email" 
         />
       </Form.Item>
       <Form.Item
+        name="password"
         rules={[
           { required: true, message: "Por favor ingresa tu contraseña!" },
         ]}
       >
         <Input
-          prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}
+          prefix={<LockOutlined className="site-form-item-icon" />}
           type="password"
-          placeholder="Contraseña"
+          placeholder="Password"
         />
       </Form.Item>
       <Form.Item>
@@ -71,3 +76,6 @@ const SignInForm = (props) => {
 };
 
 export default SignInForm;
+
+
+

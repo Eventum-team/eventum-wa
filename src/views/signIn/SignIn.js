@@ -9,13 +9,8 @@ const SignIn = (props) => {
   const pending = false;
   const successful = false;
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    props.form.validateFields((err, values) => {
-      if (!err) {
-        console.log("Received values of form: ", values);
-      }
-    });
+  const onFinish = values => {
+    console.log('Received values of form: ', values);
   };
 
   useEffect(() => {
@@ -26,7 +21,7 @@ const SignIn = (props) => {
 
   return (
     <div className="center">
-      <SignInForm handleSubmit={handleSubmit} pending={pending} error={error} />
+      <SignInForm onFinish={onFinish} pending={pending} error={error} />
     </div>
   );
 };
