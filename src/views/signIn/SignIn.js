@@ -1,27 +1,56 @@
-import React, { useEffect } from "react";
+import React, { useEffect , useState} from "react";
 import { useHistory } from "react-router-dom";
 import SignInForm from "../../components/signInForm";
 import "./index.css";
+import gql from 'graphql-tag';
+import {  useMutation } from "@apollo/react-hooks";
+
+const FETCH_GROUPS_QUERY = gql`
+mutation LogUser($username: String!, $password: String!){
+  logUser(input:{
+    username: $username,
+    password: $password
+  }){
+    refresh
+    access
+  }
+}
+`;
 
 const SignIn = (props) => {
   const history = useHistory();
-  const error = null;
-  const pending = false;
-  const successful = false;
+  const [successful, setSuccessful] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [addTodo, { loading}] = useMutation(FETCH_GROUPS_QUERY, { errorPolicy: 'all' });
 
-  const onFinish = values => {
+  const onFinish = async values => {
     console.log('Received values of form: ', values);
+    try {
+      const {data} = await addTodo({ 
+        variables: { 
+          username: values.email,
+          password: values.password,
+        } 
+      });
+
+      setSuccessful(true);
+    } catch(e){
+      console.log(e.graphQLErrors); // Aqui estan los errores que mandamos, es una arreglo
+      const errorPromt = e.graphQLErrors[0].message.detail; // mensaje
+      // console.log(e.graphQLErrors[0].status); // status
+      setErrorMessage(errorPromt);
+    }
   };
 
   useEffect(() => {
-    if (!pending && !error && successful) {
+    if (!loading && successful) {
       history.push("/home");
     }
   }, [successful]);
 
   return (
     <div className="center">
-      <SignInForm onFinish={onFinish} pending={pending} error={error} />
+      <SignInForm onFinish={onFinish} pending={loading} error={errorMessage} />
     </div>
   );
 };

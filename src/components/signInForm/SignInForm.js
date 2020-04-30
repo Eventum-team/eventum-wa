@@ -50,7 +50,7 @@ const SignInForm = (props) => {
         {error && (
           <Alert
             style={{ marginBottom: 20, marginTop: 20 }}
-            message={error.message}
+            message={error}
             type="error"
             showIcon
           />
