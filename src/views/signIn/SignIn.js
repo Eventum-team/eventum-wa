@@ -5,7 +5,7 @@ import "./index.css";
 import gql from 'graphql-tag';
 import {  useMutation } from "@apollo/react-hooks";
 
-const FETCH_GROUPS_QUERY = gql`
+const SIGNIN_MUTATION = gql`
 mutation LogUser($username: String!, $password: String!){
   logUser(input:{
     username: $username,
@@ -21,12 +21,12 @@ const SignIn = (props) => {
   const history = useHistory();
   const [successful, setSuccessful] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
-  const [addTodo, { loading}] = useMutation(FETCH_GROUPS_QUERY, { errorPolicy: 'all' });
+  const [signInMutation, { loading}] = useMutation(SIGNIN_MUTATION, { errorPolicy: 'all' });
 
   const onFinish = async values => {
     console.log('Received values of form: ', values);
     try {
-      const {data} = await addTodo({ 
+      const {data} = await signInMutation({ 
         variables: { 
           username: values.email,
           password: values.password,

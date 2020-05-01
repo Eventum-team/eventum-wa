@@ -7,13 +7,14 @@ import {
   Input,
   Row,
   Col,
-  Checkbox,
+  Select,
   Button,
   Typography,
   Alert,
 } from "antd";
 import Spinner from "../../components/spinner";
 
+const { Option } = Select;
 const { Title } = Typography;
 
 const SignUpForm = (props) => {
@@ -25,22 +26,6 @@ const SignUpForm = (props) => {
     setConfirmDirty(confirmDirty || !!value);
   };
 
-  const compareToFirstPassword = (rule, value, callback) => {
-    const { form } = props;
-    if (value && value !== form.getFieldValue("password")) {
-      callback("Las contraseñas que ingresaste no son iguales!");
-    } else {
-      callback();
-    }
-  };
-
-  const validateToNextPassword = (rule, value, callback) => {
-    const { form } = props;
-    if (value && confirmDirty) {
-      form.validateFields(["confirm"], { force: true });
-    }
-    callback();
-  };
 
   const formItemLayout = {
     labelCol: {
@@ -52,6 +37,15 @@ const SignUpForm = (props) => {
       sm: { span: 24 },
     },
   };
+
+  const prefixSelector = (
+    <Form.Item name="prefix" noStyle>
+      <Select style={{ width: 70 }}>
+        <Option value="01">+01</Option>
+        <Option value="54">+54</Option>
+      </Select>
+    </Form.Item>
+  );
 
   const tailFormItemLayout = {
     wrapperCol: {
@@ -68,7 +62,7 @@ const SignUpForm = (props) => {
 
   return (
     <div>
-      <Form {...formItemLayout} onSubmit={handleSubmit} className="login-form">
+      <Form {...formItemLayout} onFinish={handleSubmit} className="login-form">
         <div className="center-text">
           <Title level={2}>Registrate</Title>
         </div>
@@ -77,6 +71,7 @@ const SignUpForm = (props) => {
             <Form.Item
               labelAlign="left"
               label="Nombre"
+              name="username"
               rules={[
                 {
                   required: true,
@@ -89,6 +84,7 @@ const SignUpForm = (props) => {
             <Form.Item
               labelAlign="left"
               label="E-mail"
+              name="email"
               rules={[
                 {
                   type: "email",
@@ -105,6 +101,7 @@ const SignUpForm = (props) => {
             <Form.Item
               labelAlign="left"
               label="Contraseña"
+              name="password"
               hasFeedback
               rules={[
                 {
@@ -112,7 +109,7 @@ const SignUpForm = (props) => {
                   message: "Por favor ingresa una contraseña!",
                 },
                 {
-                  validator: validateToNextPassword,
+                  min: 2, message: 'La contraseña debe tener por lo menos 2 caracteres' 
                 },
               ]}
             >
@@ -121,19 +118,62 @@ const SignUpForm = (props) => {
             <Form.Item
               labelAlign="left"
               label="Confirmar Contraseña"
+              name="confirmPassword"
               extra="Verifica tu Contraseña"
+              ependencies={['password']}
               hasFeedback
               rules={[
                 {
                   required: true,
                   message: "Por favor verifica tu contraseña!",
                 },
-                {
-                  validator: compareToFirstPassword,
-                },
+                ({ getFieldValue }) => ({
+                  validator(rule, value) {
+                    if (!value || getFieldValue('password') === value) {
+                      return Promise.resolve();
+                    }
+                    return Promise.reject('Las contraseñas que ingresaste no son validas');
+                  },
+                }),
               ]}
             >
               <Input.Password onBlur={handleConfirmBlur} />
+            </Form.Item>
+
+            <Form.Item
+              name="phone"
+              label="Numero Celular"
+              labelAlign="left"
+            >
+              <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
+            </Form.Item>
+
+            <Form.Item 
+              label="Carrera"
+              name="career"
+              labelAlign="left"
+              rules={[
+                { 
+                  required: true, 
+                  message: 'Por favor pon tu carrera' 
+                },
+              ]}
+            >
+              <Input />
+            </Form.Item>
+
+            <Form.Item 
+              label="Edad"
+              labelAlign="left"
+              name="age"
+              rules={[
+                { 
+                  required: true, 
+                  message: 'Por favor pon tu edad' 
+                },
+              ]}
+            >
+              <Input type='Number'/>
             </Form.Item>
           </Col>
         </Row>
@@ -142,7 +182,7 @@ const SignUpForm = (props) => {
             {error && (
               <Alert
                 style={{ marginBottom: 20 }}
-                message={error.message}
+                message={error}
                 type="error"
                 showIcon
               />
