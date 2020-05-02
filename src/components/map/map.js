@@ -1,46 +1,51 @@
 import React, { Component } from 'react';
-import GoogleMapReact from 'google-map-react';
-import './index.css';
+import MarkersOnMap from 'markers-on-map-react';
 
-
-const Marker = (props: any) => {
-    const { color, name, id } = props;
-    return (
-      <div className="marker"
-        style={{ backgroundColor: color, cursor: 'pointer'}}
-        title={name}
-      />
-    );
-  };
-
+// Any component you need to use
 class EventMap extends Component {
-  constructor(props) {
-    super(props);
+
+
+  // Any lifecycle method you need to use
+  componentDidMount() {
+    const lat=this.props.lat;
+    const lng=this.props.lng;
+    // Basic initialize
+    MarkersOnMap.Init({
+      mapWidth: '100%',
+      mapHeight: '450px',
+      mapBackgroundColor: '#f8f8f8',
+      mapCenterLat: lat,
+      mapCenterLong: lng,
+      mapMinZoom: 2,
+      mapZoomLevel: 12,
+      mapMaxZoom: 15,
+      googleApiKey: "AIzaSyBTOLA6Homuc7zsVibRBxeKlGcZO3IZF7o", // required => Google Maps JavaScript API Key (in string format)
+
+      markerObjects: [
+        // at least one object required
+        {
+          markerLat: lat, // marker latitude as number
+          markerLong: lng, // marker longitude as number
+        },
+      ],
+    });
+
+    // Select map element (ID or Class)
+    MarkersOnMap.Run('div#GoogleMap');
+
   }
-  static defaultProps = {
-    zoom: 15
-  };
 
   render() {
-    return (
-      // Important! Always set the container height explicitly
-      <div style={{ height: '500px', width: '100%'}}>
-        <GoogleMapReact
-          bootstrapURLKeys={{ key: "AIzaSyBTOLA6Homuc7zsVibRBxeKlGcZO3IZF7o" }}
-          defaultCenter={this.props.center}
-          defaultZoom={this.props.zoom}
-        >
-        <Marker
-          lat={this.props.lat}
-          lng={this.props.lng}
-          name="E"
-          color="blue"
-        />
-        </GoogleMapReact>
-      </div>
-    );
-  }
-}
 
+    return (
+
+      // Map element
+      <div id="GoogleMap"></div>
+
+    );
+
+  }
+
+}
 
 export default EventMap;
