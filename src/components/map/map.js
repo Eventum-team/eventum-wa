@@ -12,7 +12,7 @@ class EventMap extends Component {
     // Basic initialize
     MarkersOnMap.Init({
       mapWidth: '100%',
-      mapHeight: '450px',
+      mapHeight: '500px',
       mapBackgroundColor: '#f8f8f8',
       mapCenterLat: lat,
       mapCenterLong: lng,
