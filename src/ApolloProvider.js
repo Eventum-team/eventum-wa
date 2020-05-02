@@ -6,16 +6,16 @@ import { ApolloProvider } from '@apollo/react-hooks'
 
 const cache = new InMemoryCache()
 
-/*
+
 const client = new ApolloClient({
   uri: process.env.GATEWAY_URL || 'http://190.24.19.228:3000/graphql', cache
-});*/
+});
 
-
+/*
 const client = new ApolloClient({
   uri: process.env.GATEWAY_URL || 'http://localhost:5000/graphql', cache
 });
-
+*/
 cache.writeData({  data: {
   token: '',
   type: 0,

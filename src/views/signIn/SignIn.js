@@ -35,6 +35,7 @@ const SignIn = (props) => {
 
       setSuccessful(true);
     } catch(e){
+      console.log({e});
       console.log(e.graphQLErrors); // Aqui estan los errores que mandamos, es una arreglo
       const errorPromt = e.graphQLErrors[0].message.detail; // mensaje
       // console.log(e.graphQLErrors[0].status); // status
