@@ -4,28 +4,53 @@ import HomeEvents from '../../components/homeEvents'
 import { Layout } from 'antd';
 import ContentLayout from "../../components/contentLayout";
 import { Row, Col, Avatar } from 'antd';
+import Spinner from "../../components/spinner";
+import gql from 'graphql-tag';
+import {  useQuery } from "@apollo/react-hooks";
+
 
 const { Header, Footer, Sider, Content } = Layout;
+
+const GET_EVENTS = gql`
+query {
+  events{
+    id
+    name
+    description
+    url
+    photo
+  }
+}
+`;
+
 const Home = () => {
-    //PRUEBA PARA eventos
+  //PRUEBA PARA eventos
+  const { loading, error, data } = useQuery(GET_EVENTS);
+  console.log(data);
   const evList = [];
-  for (let i = 0; i < 23; i++) {
-    evList.push({
-      href: 'http://ant.design',
-      name: `Event ${i}`,
-      avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-      picture: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png",
-      description:'DescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescription',
-    });
+
+  if (!loading){
+    for (let i = 0; i < data.events.length; i++) {
+      evList.push({
+        href: 'http://ant.design',
+        name: data.events[i].name,
+        avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+        picture: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png",
+        description: data.events[i].description,
+      });
+    }
   }
 
   return (
     <React.Fragment>
       <HomeBanner/>
       <div>
-        <ContentLayout>
-          <HomeEvents data={evList} />
-        </ContentLayout>
+        {loading && <Spinner />}
+        {!loading && (
+          <ContentLayout>
+            <HomeEvents data={evList} />
+          </ContentLayout>
+        )}
       </div>
     </React.Fragment>
   );
