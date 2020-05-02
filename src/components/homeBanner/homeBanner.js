@@ -2,7 +2,6 @@ import React from "react";
 import { Layout, Menu } from "antd";
 import Icon from "@ant-design/icons";
 import { NavLink } from "react-router-dom";
-import "./index.css";
 import Background from "../../assets/backgrounds/ben-duchac-96DW4Pow3qI-unsplash.jpg"
 const { Header, Footer, Sider, Content } = Layout;
 const HomeBanner= () => {

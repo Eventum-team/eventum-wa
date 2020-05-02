@@ -1,7 +1,6 @@
 import React from 'react'
 import { Card,  Switch  } from 'antd';
 import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
-import "./index.css";
 
 const EventCard = (props) => {
   const { name, description, start, finish,asist } = props;
