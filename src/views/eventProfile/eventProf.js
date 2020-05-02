@@ -39,10 +39,6 @@ const { loading, error, data } = useQuery(FETCH_GROUPS_QUERY);
 ////Para mapa
 const latitud = 59.95;
 const longitud = 30.33;
-const center1 = {
-  lat: latitud,
-  lng: longitud
-};
 
 ////Para presentaciòn
 const evName = "NombreEvento"
@@ -96,8 +92,7 @@ const EventProfile = props => {
           <Row>
             <Col flex={10}><EventMap
               lat={latitud}
-              lng={longitud}
-              center= {center1}/>
+              lng={longitud}/>
             </Col>
             <Col flex={2}><AssistList data={aList}/></Col>
           </Row>
@@ -109,6 +104,3 @@ const EventProfile = props => {
       </React.Fragment>
   );
 };
-
-
-export default EventProfile;
