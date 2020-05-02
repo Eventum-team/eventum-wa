@@ -50,7 +50,7 @@ const SignIn = (props) => {
   }, [successful]);
 
   return (
-    <div className="center">
+    <div className="centerSignIn">
       <SignInForm onFinish={onFinish} pending={loading} error={errorMessage} />
     </div>
   );

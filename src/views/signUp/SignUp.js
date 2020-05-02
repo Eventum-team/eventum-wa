@@ -88,7 +88,7 @@ const SignUp = (props) => {
   }, [successful]);
 
   return (
-    <div className="center">
+    <div className="centerSignUp">
       <SignUpForm handleSubmit={handleSubmit} pending={loading} error={errorMessage} />
     </div>
   );
