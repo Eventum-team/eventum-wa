@@ -2,7 +2,6 @@ import React from "react";
 import { Layout, Menu } from "antd";
 import Icon from "@ant-design/icons";
 import { NavLink } from "react-router-dom";
-import "./index.css";
 const { Header, Footer, Sider, Content } = Layout;
 
 const EventBanner= (props) => {
