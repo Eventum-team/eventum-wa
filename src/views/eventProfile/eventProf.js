@@ -10,8 +10,7 @@ import { Row, Col, Avatar } from 'antd';
 import gql from 'graphql-tag';
 import {useQuery} from "@apollo/react-hooks";
 import Spinner from "../../components/spinner";
-//import gql from 'graphql-tag';
-//import {  useMutation, useQuery } from "@apollo/react-hooks";
+
 
 //GRAPHQL
 
