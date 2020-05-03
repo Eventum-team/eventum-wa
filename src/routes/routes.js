@@ -14,7 +14,7 @@ import UserProfile from "../views/userProfile";
 // import EditEvent from "../views/editEvent";
 // import EditProfile from "../views/editProfile";
 import CreateGroup from "../views/createGroup";
-// import CreateEvent from "../views/createEvent";
+import CreateEvent from "../views/createEvent";
 // import CreateProfile from "../views/createProfile";
 // import NotFound from "../views/notFound";
 
@@ -29,6 +29,7 @@ const routes = () => {
           {/* <Redirect exact from="/" to="home" /> */}
           <Route exact path="/home" component={Home} />
           <Route exact path="/createGroup" component={CreateGroup} />
+          <Route exact path="/createEvent" component={CreateEvent} />
           <Route exact path="/eventProfile" component={EventProfile} />
           <Route exact path="/userProfile" component={UserProfile} />
         </MainLayout>

@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import CreateGroupForm from "../../components/createGroupForm";
+import CreateEventForm from "../../components/createEventForm";
 import MainLayout from "../../components/layout";
 import { Typography, Row, Col } from "antd";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,33 +14,33 @@ import gql from 'graphql-tag';
 const { Title } = Typography;
 
 
-const EVENT_MUTATION = gql`
+const CREATE_EVENT_MUTATION = gql`
 mutation CreateEvent(
-  ownerId: 1
-  ownerType: "user"
-  name: "test event"
-  eventStartDate: "2020-04-20T06:00:00Z"
-  eventFinishDate: "2020-04-20T06:00:00Z"
-  description: "desc"
-  latitude: "1"
-  longitude: "2"
-  status: "Ok"
-  eventType: "official"
-  url: "some url"  
+  $ownerId: Int!
+  $ownerType: String!
+  $name: String!
+  $eventStartDate: String!
+  $eventFinishDate: String!
+  $description: String!
+  $latitude: String!
+  $longitude: String!
+  $status: String!
+  $eventType: String!
+  $url: String!
 ){
   createEvent(
     input:{
-      ownerId: 1
-      ownerType: "user"
-      name: "test event"
-      eventStartDate: "2020-04-20T06:00:00Z"
-      eventFinishDate: "2020-04-20T06:00:00Z"
-      description: "desc"
-      latitude: "1"
-      longitude: "2"
-      status: "Ok"
-      eventType: "official"
-      url: "some url"
+      ownerId: $ownerId
+      ownerType: $ownerType
+      name: $name
+      eventStartDate: $eventStartDate
+      eventFinishDate: $eventFinishDate
+      description: $description
+      latitude: $latitude
+      longitude: $longitude
+      status: $status
+      eventType: $eventType
+      url: $url
     }
   ){
     message
@@ -48,18 +48,39 @@ mutation CreateEvent(
   }
 }
 `;
+
+const formatDate = (moment) => {
+  return moment.format('YYYY-MM-DDThh:mm:ss') + 'Z';
+};
+
     
 const CreateGroup = (props) => {
   // const dispatch = useDispatch();
   const [successful, setSuccessful] = useState(false);
-  const { loading, error, data } = useQuery(GROUP_TYPES_QUERY);
-  const [createGroupMutation, { loadingCreate}] = useMutation(CREATE_GROUP_MUTATION, { errorPolicy: 'all' });
+  const [createEventMutation, { loading}] = useMutation(CREATE_EVENT_MUTATION, { errorPolicy: 'all' });
 
   const handleSubmit = (values) => {
+    console.log(values);
+    const formatedDates = values.date.map(formatDate)
 
+    createEventMutation({
+      variables:{
+        ownerId: parseInt("1"),
+        ownerType: "user",
+        name: values.groupName,
+        eventStartDate: formatedDates[0],
+        eventFinishDate: formatedDates[1],
+        description: values.description,
+        latitude: "",
+        longitude: "",
+        status: "active",
+        eventType: "official",
+        url: "",
+      }
+    });
+
+    setSuccessful(true);
   };
-
-  console.log(data);
 
   // {!loading && error && <ErrorAlert error={error} />}
   return (
@@ -68,7 +89,7 @@ const CreateGroup = (props) => {
       
       {!loading && successful && (
         <Successful
-          redirect={"createGroup"}
+          redirect={"createEvent"}
           processCompleted={()=>{}}
           //terminar proceso
         />
@@ -76,11 +97,11 @@ const CreateGroup = (props) => {
       {!loading  && !successful && (
         <div>
           <Title level={2} style={{ textAlign: "center" }}>
-            Crea un Grupo
+            Crea un evento
           </Title>
           <Row>
             <Col span={12} style={{ padding: "0 100px" }}>
-              <CreateGroupForm handleSubmit={handleSubmit} groupTypes={data} />
+              <CreateEventForm handleSubmit={handleSubmit}  />
             </Col>
             <Col span={12}>
               <div>
