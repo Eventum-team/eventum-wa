@@ -7,14 +7,17 @@ import AssistList from "../../components/assistList";
 import ContentLayout from "../../components/contentLayout";
 import { Layout } from 'antd';
 import { Row, Col, Avatar } from 'antd';
+import gql from 'graphql-tag';
+import {useQuery} from "@apollo/react-hooks";
+import Spinner from "../../components/spinner";
 //import gql from 'graphql-tag';
 //import {  useMutation, useQuery } from "@apollo/react-hooks";
 
 //GRAPHQL
-/*
+
 const EVENT_PROFILE_QUERY = gql`
-query eProfile($eventId: int!, $userId: int!){
-  eveventProfile(eventId: $eventId, userId: $userId){
+query eProfile($eventId: ID!, $userId: ID!){
+  eventProfile(eventId: $eventId, userId: $userId){
     name
     description
     eventStartDate
@@ -26,73 +29,86 @@ query eProfile($eventId: int!, $userId: int!){
       likes
       dislikes
       name
+      idUser
     }
     assistant{
+      id
       name
     }
   }
 }
 `;
-const { loading, error, data } = useQuery(FETCH_GROUPS_QUERY);
-
-*/
-////Para mapa
-const latitud = 59.95;
-const longitud = 30.33;
-
-////Para presentaciòn
-const evName = "NombreEvento"
-const evDesc = "DescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescription"
-const evStart = "2020-04-02"
-const evFinish = "2020-04-03"
-const evAsist = false
-const evPhoto = "../../assets/backgrounds/ben-duchac-96DW4Pow3qI-unsplash.jpg"
 
 
 
 
-const EventProfile = props => {
+
+
+
+const EventProfile = ({ match }) => {
+
+  const evId=match.params.id
+  const { loading, error, data } = useQuery(EVENT_PROFILE_QUERY, {
+    variables: {
+      eventId: evId,
+      userId: 4,
+    }
+  });
+
+  const evAsist = false /// if active user is on alist
+  const evPhoto = "../../assets/backgrounds/ben-duchac-96DW4Pow3qI-unsplash.jpg"
+
+
   //PRUEBA PARA ASISTENTES
   const aList = [];
-  for (let i = 0; i < 23; i++) {
-    aList.push({
-      href: 'http://ant.design',
-      name: `Assistant ${i}`,
-      avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-    });
+  if (!loading){
+    for (let i = 0; i < data.eventProfile.assistant.length; i++) {
+      aList.push({
+        href: '/userProfile/'+data.eventProfile.assistant[i].id,
+        name: data.eventProfile.assistant[i].name,
+        avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+      });
+    }
   }
+
   //PRUEBA PARA COMENTARIOS
   const commentList = [];
-  for (let i = 0; i < 23; i++) {
-    commentList.push({
-      href: 'http://ant.design',
-      name: `Comment Name ${i}`,
-      avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-      text:'Comment text',
-      likes: '153',
-      dislikes: '2',
-    });
+  if (!loading){
+    console.log(parseInt(data.eventProfile.latitude.split(".")[0]))
+    console.log(parseInt(data.eventProfile.longitude.split(".")[0]))
+    for (let i = 0; i < data.eventProfile.comments.length; i++) {
+      commentList.push({
+        href: '/userProfile/'+data.eventProfile.comments[i].idUser,
+        name: data.eventProfile.comments[i].name,
+        avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+        text:data.eventProfile.comments[i].text,
+        likes: data.eventProfile.comments[i].likes,
+        dislikes: data.eventProfile.comments[i].dislikes,
+      });
+    }
   }
 
-
   return (
+    <div>
+      {loading && <Spinner />}
+      {!loading && (
     <React.Fragment>
-      <EventBanner name= {evName} photo={evPhoto}/>
-      <div>
+      <EventBanner name= {data.eventProfile.name} photo={evPhoto}/>
+
         <ContentLayout>
           <Row>
             <EventCard
-              name= {evName}
-              description= {evDesc}
-              start= {evStart}
-              finish= {evFinish}
+              name= {data.eventProfile.name}
+              description= {data.eventProfile.description}
+              start= {data.eventProfile.eventStartDate}
+              finish= {data.eventProfile.eventFinishDate}
               asist= {evAsist}
               />
           </Row>
           <Row>
             <Col flex={10}><EventMap
-              lat={latitud}
-              lng={longitud}/>
+              lat={parseInt(data.eventProfile.latitude.split(".")[0])/10}
+              lng={parseInt(data.eventProfile.longitude.split(".")[0])/10}/>
             </Col>
             <Col flex={2}><AssistList data={aList}/></Col>
           </Row>
@@ -100,7 +116,12 @@ const EventProfile = props => {
             <EventComments data={commentList}/>
           </Row>
         </ContentLayout>
-        </div>
+
       </React.Fragment>
+    )}
+  </div>
   );
 };
+
+
+export default EventProfile;
