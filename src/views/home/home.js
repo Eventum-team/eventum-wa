@@ -7,7 +7,7 @@ import { Row, Col, Avatar } from 'antd';
 import Spinner from "../../components/spinner";
 import gql from 'graphql-tag';
 import {  useQuery } from "@apollo/react-hooks";
-
+import store from "../../data/redux/store";
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -24,6 +24,14 @@ query {
 `;
 
 const Home = () => {
+  // in home
+  console.log("In home ----------------------------------------------");
+  console.log(store.getState());
+  console.log("In home ----------------------------------------------");
+
+
+
+
   //PRUEBA PARA eventos
   const { loading, error, data } = useQuery(GET_EVENTS);
   console.log(data);
