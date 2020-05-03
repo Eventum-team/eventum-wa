@@ -1,75 +1,79 @@
-/*import React from "react";
-import HomeBanner from '../../components/homeBanner'
-import HomeEvents from '../../components/homeEvents'
-import { Layout } from 'antd';
+import React from "react";
+import GroupCard from "../../components/groupCard";
+import GroupBanner from '../../components/groupBanner'
+import AssistList from "../../components/assistList";
+import EventsList from "../../components/eventList";
 import ContentLayout from "../../components/contentLayout";
+import { Layout } from 'antd';
 import { Row, Col, Avatar } from 'antd';
-import Spinner from "../../components/spinner";
 import gql from 'graphql-tag';
-import { useLazyQuery } from '@apollo/react-hooks';
-import { ConfigContext } from "antd/lib/config-provider";
+import {useQuery} from "@apollo/react-hooks";
 
-const { Header, Footer, Sider, Content } = Layout;
 
-const GET_EVENTS = gql`
-    query EventsByGroup($id_group: ID!) {
-        eventsByGroup(id_group: $id_group) {
-            id
-            name
-            description
-            url
-            photo
-        }
+//GRAPHQL
+
+const GROUP_PROFILE_QUERY = gql`
+query eProfile($id: ID!){
+  groupProfile(id: $id) {
+    type
+    name
+    description
+    created_date
+    contact_number
+    followers
+    events{
+      id
+      status
+      name
+      description
+      photo
     }
+    admins{
+      id
+      name
+    }
+    photo
+  }
+}
 `;
 
-function GroupProfile ({ group_id }){
-    //obtener eventos del grupo
-    const [getEvents, { loading, data }] = useLazyQuery(GET_EVENTS, {
-        onCompleted: (data) => {
-            context.getEvents(
-                data.getEvents.id,
-                data.getEvents.name,
-                data.getEvents.description,
-                data.getEvents.url,
-                data.getEvents.photo
-            )
-        },
-        onerror: (error) => {
-            return `Error! ${error}`;
-        },
-    });
-    console.log(data);
-    const evList = [];
-
-    if (loading) return null;
-  
-    if (!loading){
-      for (let i = 0; i < data.events.length; i++) {
-        evList.push({
-          href: data.events[i].url,
-          name: data.events[i].name,
-          avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-          picture: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png",
-          description: data.events[i].description,
-        });
-      }
+const GroupProfile = (props) => {
+  const {id} = props.match.params;
+  console.log("iden ", id);
+  const { loading, error, data } = useQuery(GROUP_PROFILE_QUERY, {
+    variables: {
+      id: id,
     }
-  
-    return (
+  });
+
+  if (loading) {return 'Loading...';}
+  if (error) {return `Error! ${error.message}`;}
+
+  var aList = data.groupProfile.admins;
+
+  const grPhoto = "../../assets/backgrounds/ben-duchac-96DW4Pow3qI-unsplash.jpg"
+
+  return(
+    <div>
       <React.Fragment>
-        <HomeBanner/>
-        <div>
-          {loading && <Spinner />}
-          {!loading && (
-            <ContentLayout>
-              <HomeEvents data={evList} />
-            </ContentLayout>
-          )}
-        </div>
+        <GroupBanner name= {data.groupProfile.name} photo={grPhoto}/>
+        <ContentLayout>
+          <Row>
+            <GroupCard type={data.groupProfile.type} name={data.groupProfile.name} description={data.groupProfile.description} created_date={data.groupProfile.created_date} contact_number={data.groupProfile.contact_number} followers={data.groupProfile.followers}></GroupCard>
+          </Row>
+          <Row>
+            <Col flex={10}>
+              <EventsList data={data.groupProfile.events}/>
+            </Col>
+            <Col flex={2}>
+              <AssistList data={aList}/>
+            </Col>
+          </Row>
+        </ContentLayout>
       </React.Fragment>
-    );
-  };
-  
-  export default GroupProfile;*/
-  
+    </div>
+    
+  );
+}
+
+export default GroupProfile;

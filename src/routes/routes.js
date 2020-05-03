@@ -31,8 +31,8 @@ const routes = () => {
           <Route exact path="/searchGroups" component={Groups} />
           <Route exact path="/searchEvents" component={Events} />
           <Route exact path="/createGroup" component={CreateGroup} />
-          <Route exact path="/groupProfile" component={GroupProfile} />
-          <Route exact path="/eventProfile" component={EventProfile} />
+          <Route exact path="/eventProfile/:id" component={EventProfile} />
+          <Route exact path="/groupProfile/:id" component={GroupProfile} />
           <Route exact path="/userProfile" component={UserProfile} />
         </MainLayout>
       </Switch>

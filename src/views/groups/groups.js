@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import GroupsBanner from '../../components/groupsBanner'
 import ContentLayout from "../../components/contentLayout";
+import containsSubStrings from "../substrings.js";
 import { Layout } from 'antd';
 import { Form,
     Input,
@@ -9,11 +10,13 @@ import { Form,
     Select,
     Button,
     Typography,
-    List, Avatar, Space, 
+    List,
+    Avatar,
+    Space, 
     Alert} from 'antd';
 import gql from 'graphql-tag';
 import {  useQuery } from "@apollo/react-hooks";
-import { MessageOutlined, LikeOutlined, StarOutlined ,DislikeOutlined } from '@ant-design/icons';
+import { StarOutlined, ProfileOutlined } from '@ant-design/icons';
 
 const GET_ALL_GROUPS_AND_TYPES = gql`
   {
@@ -39,18 +42,6 @@ var pickedCategory = 0;
 var searchedGroups = [];
 
 const Groups = () =>{
-
-    function containsSubStrings(container, contained){
-        var splitted = contained.split(" ");
-        var contains = true;
-        for(var index = 0; index < splitted.length; index++){
-            if(!container.includes(splitted[index])){
-                contains = false;
-                break;
-            }
-        }
-        return contains;
-    }
 
     const handleChange = (selectedOption) => {
         pickedCategory = selectedOption;
@@ -95,8 +86,6 @@ const Groups = () =>{
     
         if (loading) return 'Loading...';
         if (error) return `Error! ${error.message}`;
-
-    //searchedGroups = data.allGroups;
 
     var categories = [];
     categories.push({value: 0, label: "Ninguno"});
@@ -167,7 +156,7 @@ const Groups = () =>{
                         >
                         <List.Item.Meta
                             avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                            title={<a href="/groupProfile">{item.name}</a>}
+                            title={<a href={"/groupProfile/" + item.id_group}>{item.name}</a>}
                             description={item.type}
                         />
                         {item.description}

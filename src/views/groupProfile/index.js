@@ -1,2 +1,2 @@
-/*import GroupProfile from "./groupProf";
-export default GroupProfile;*/
+import GroupProfile from "./groupProf";
+export default GroupProfile;
