@@ -4,9 +4,9 @@ import MainLayout from "../components/layout";
 import Home from "../views/home";
 import SignIn from "../views/signIn";
 import SignUp from "../views/signUp";
-// import Groups from "../views/groups";
-// import Events from "../views/events";
-// import GroupProfile from "../views/groupProfile";
+import Groups from "../views/groups";
+import Events from "../views/events";
+import GroupProfile from "../views/groupProfile";
 import EventMap from "../components/map";
 import EventProfile from "../views/eventProfile";
 import UserProfile from "../views/userProfile";
@@ -28,7 +28,10 @@ const routes = () => {
         <MainLayout>
           {/* <Redirect exact from="/" to="home" /> */}
           <Route exact path="/home" component={Home} />
+          <Route exact path="/searchGroups" component={Groups} />
+          <Route exact path="/searchEvents" component={Events} />
           <Route exact path="/createGroup" component={CreateGroup} />
+          <Route exact path="/groupProfile" component={GroupProfile} />
           <Route exact path="/eventProfile" component={EventProfile} />
           <Route exact path="/userProfile" component={UserProfile} />
         </MainLayout>

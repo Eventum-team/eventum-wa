@@ -54,12 +54,12 @@ const Navbar = () => {
         }}
       >
         <Menu.Item key="1">
-          <NavLink activeClassName="active" to="/cattle">
+          <NavLink activeClassName="active" to="/searchEvents">
             Eventos
           </NavLink>
         </Menu.Item>
         <Menu.Item key="2">
-          <NavLink activeClassName="active" to="trips">
+          <NavLink activeClassName="active" to="searchGroups">
             Grupos
           </NavLink>
         </Menu.Item>
