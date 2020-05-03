@@ -38,12 +38,6 @@ query eProfile($eventId: ID!, $userId: ID!){
 }
 `;
 
-
-
-
-
-
-
 const EventProfile = ({ match }) => {
 
   const evId=match.params.id
@@ -106,8 +100,8 @@ const EventProfile = ({ match }) => {
           </Row>
           <Row>
             <Col flex={10}><EventMap
-              lat={parseInt(data.eventProfile.latitude.split(".")[0])/10}
-              lng={parseInt(data.eventProfile.longitude.split(".")[0])/10}/>
+              lat={parseInt(data.eventProfile.latitude)}
+              lng={parseInt(data.eventProfile.longitude)}/>
             </Col>
             <Col flex={2}><AssistList data={aList}/></Col>
           </Row>
