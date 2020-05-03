@@ -26,13 +26,13 @@ query {
 const Home = () => {
   //PRUEBA PARA eventos
   const { loading, error, data } = useQuery(GET_EVENTS);
-  console.log(data);
   const evList = [];
 
   if (!loading){
+    console.log(data.events);
     for (let i = 0; i < data.events.length; i++) {
       evList.push({
-        href: 'http://ant.design',
+        href: '/eventProfile/'+data.events[i].id,
         name: data.events[i].name,
         avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
         picture: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png",
