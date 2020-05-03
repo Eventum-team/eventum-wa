@@ -31,15 +31,10 @@ const HomeEvents = (props) => {
                     src={item.picture}
                   />
                 }
-                actions={[
-                  <SettingOutlined key="setting" />,
-                  <EditOutlined key="edit" />,
-                  <EllipsisOutlined key="ellipsis" />,
-                ]}
               >
                 <Meta
                   avatar={<Avatar src={item.avatar} />}
-                  title={item.name}
+                  title={<a href={item.href}>{item.name}</a>}
                   description={item.description}
                 />
               </Card>
