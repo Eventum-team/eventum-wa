@@ -54,7 +54,7 @@ class AssistList extends React.Component {
                   avatar={
                     <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
                   }
-                  title={<a href="https://ant.design">{item.name}</a>}
+                  title={<a href={item.href}>{item.name}</a>}
                 />
               </List.Item>
             )}
