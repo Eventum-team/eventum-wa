@@ -7,89 +7,94 @@ import GrupoUsuario from "../../components/gruposUsuario";
 import ContentLayout from "../../components/contentLayout";
 import { Layout } from 'antd';
 import { Row, Col, Avatar } from 'antd';
-//import gql from 'graphql-tag';
-//import {  useMutation, useQuery } from "@apollo/react-hooks";
+import gql from 'graphql-tag';
+import {useQuery} from "@apollo/react-hooks";
+import Spinner from "../../components/spinner";
 
 //GRAPHQL
-/*
-const EVENT_PROFILE_QUERY = gql`
-query eProfile($eventId: int!, $userId: int!){
-  eveventProfile(eventId: $eventId, userId: $userId){
+const GET_USER_PROFILE = gql`
+query getUserProfile($userId: Int!) {
+  userProfile(userId: $userId){
+    id
     name
-    description
-    eventStartDate
-    eventFinishDate
-    latitude
-    longitude
-    comments{
-      text
-      likes
-      dislikes
+    career
+    age
+    phone_number
+    groupsFollowing{
+      id_group
+      id_type
+      type
       name
+      description
     }
-    assistant{
+    eventsCreated {
+      id
       name
+      description
     }
   }
 }
 `;
-const { loading, error, data } = useQuery(FETCH_GROUPS_QUERY);
-
-*/
-
-////Para info de usuario
-const userName = "NOMBRE APELLIDO"
-const phone = 30300020
-const age = 50
-const career = "ing de sistemas"
 
 
 
 
-
-const UserProfile = props => {
-  //PRUEBA PARA frupos
+const UserProfile = ({ match }) => {
+  //PRUEBA PARA grupos
+  const uId=match.params.id
+  const { loading, error, data } = useQuery(GET_USER_PROFILE, {
+    variables: {
+      userId: parseInt(uId),
+    }
+  });
 
   const grList = [];
-  for (let i = 0; i < 23; i++) {
-    grList.push({
-      href: 'http://ant.design',
-      name: `Group ${i}`,
-      avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-      picture: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png",
-      description:'DescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescription',
-    });
+  if (!loading){
+    for (let i = 0; i < data.userProfile.groupsFollowing.length; i++) {
+      grList.push({
+        href: 'http://ant.design',//'/rutagrupos/'+data.userProfile.groupsFollowing[i].id_group,
+        name: data.userProfile.groupsFollowing[i].name,
+        avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+        picture: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png",
+        description: data.userProfile.groupsFollowing[i].description,
+      });
+    }
   }
   //PRUEBA PARA eventos
   const evList = [];
-  for (let i = 0; i < 23; i++) {
-    evList.push({
-      href: 'http://ant.design',
-      name: `Event ${i}`,
-      avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-      picture: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png",
-      description:'DescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescription',
-    });
+  if (!loading){
+    for (let i = 0; i < data.userProfile.eventsCreated.length; i++) {
+      evList.push({
+        href: '/eventProfile/'+data.userProfile.eventsCreated[i].id,
+        name: data.userProfile.eventsCreated[i].name,
+        avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+        picture: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png",
+        description:data.userProfile.eventsCreated[i].description,
+      });
+    }
   }
 
 
   return (
-
-    <ContentLayout>
-      <Row>
-        <UserHeader name={userName}/>
-      </Row>
-      <Row>
-        <UserInfo name={userName} phone={phone} age={age} career={career} />
-      </Row>
-      <Row>
-        <EventoUsuario data={evList} />
-      </Row>
-      <Row>
-        <GrupoUsuario data={grList} />
-      </Row>
-
-    </ContentLayout>
+    <div>
+      {loading && <Spinner />}
+      {!loading && (
+      <ContentLayout>
+        <Row>
+          <UserHeader name={data.userProfile.name}/>
+        </Row>
+        <Row>
+          <UserInfo name={data.userProfile.name} phone={data.userProfile.phone_number} age={data.userProfile.age} career={data.userProfile.career} />
+        </Row>
+        <Row>
+          <EventoUsuario data={evList} />
+        </Row>
+        <Row>
+          <GrupoUsuario data={grList} />
+        </Row>
+      </ContentLayout>
+      )}
+    </div>
   );
 };
 
