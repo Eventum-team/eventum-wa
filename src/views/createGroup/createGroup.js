@@ -75,7 +75,7 @@ mutation CreateNewGroup(
   }
 }
 `;
-
+    
 const CreateGroup = (props) => {
   // const dispatch = useDispatch();
   const [successful, setSuccessful] = useState(false);
