@@ -13,7 +13,7 @@ const EventoUsuario = (props) => {
       extra={<div><Button type="primary">Eventos a los que iré</Button>
                   <Button type="primary">Eventos Creados</Button>
                   <Button type="primary" shape="circle" icon={<PlusOutlined />} /></div>}
-      
+
       >
       <List
           pagination={{
@@ -44,7 +44,7 @@ const EventoUsuario = (props) => {
               >
                 <Meta
                   avatar={<Avatar src={item.avatar} />}
-                  title={item.name}
+                  title={<a href={item.href}>{item.name}</a>}
                   description={item.description}
                 />
               </Card>
