@@ -50,8 +50,11 @@ const EventProfile = ({ match }) => {
 
   const evAsist = false /// if active user is on alist
   const evPhoto = "../../assets/backgrounds/ben-duchac-96DW4Pow3qI-unsplash.jpg"
-
-
+  //PRUEBAS PARA LATITUD Y LONGITUD NO VÁLIDAS
+  /*
+  console.log(parseInt(data.eventProfile.latitude.split(".")[0]))
+  console.log(parseInt(data.eventProfile.longitude.split(".")[0]))
+*/
   //PRUEBA PARA ASISTENTES
   const aList = [];
   if (!loading){
@@ -67,8 +70,7 @@ const EventProfile = ({ match }) => {
   //PRUEBA PARA COMENTARIOS
   const commentList = [];
   if (!loading){
-    console.log(parseInt(data.eventProfile.latitude.split(".")[0]))
-    console.log(parseInt(data.eventProfile.longitude.split(".")[0]))
+    
     for (let i = 0; i < data.eventProfile.comments.length; i++) {
       commentList.push({
         href: '/userProfile/'+data.eventProfile.comments[i].idUser,
