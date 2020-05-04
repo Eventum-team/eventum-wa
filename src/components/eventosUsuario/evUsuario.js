@@ -10,8 +10,7 @@ const EventoUsuario = (props) => {
   return (
     <Card title="Mis Eventos"
       style={{ width: '100%' }}
-      extra={<div><Button type="primary">Eventos a los que iré</Button>
-                  <Button type="primary">Eventos Creados</Button>
+      extra={<div>
                   <Button href='/createEvent' type="primary" shape="circle" icon={<PlusOutlined />} /></div>}
 
       >
