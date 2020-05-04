@@ -9,6 +9,7 @@ import EventumIcon from "../../assets/icons/eventumIconApp.png";
 
 const { Header } = Layout;
 const { SubMenu } = Menu;
+const activeuser = parseInt(localStorage.getItem('userId'));
 
 const Navbar = () => {
 
@@ -90,7 +91,7 @@ const Navbar = () => {
             </NavLink>
           </Menu.Item>
           <Menu.Item key="8">
-            <NavLink activeClassName="active" to={`/userProfile/${"4"}`}>
+            <NavLink activeClassName="active" to={`/userProfile/`+activeuser}>
               Mi perfil
             </NavLink>
           </Menu.Item>
