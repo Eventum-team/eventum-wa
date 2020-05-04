@@ -1,0 +1,697 @@
+# Welcome to GraphiQL
+#
+# GraphiQL is an in-browser tool for writing, validating, and
+# testing GraphQL queries.
+#
+# Type queries into this side of the screen, and you will see intelligent
+# typeaheads aware of the current GraphQL type schema and live syntax and
+# validation errors highlighted within the text.
+#
+# GraphQL queries typically start with a "{" character. Lines that starts
+# with a # are ignored.
+#
+# An example GraphQL query might look like:
+#
+#     {
+#       field(arg: "value") {
+#         subField
+#       }
+#     }
+#
+# Keyboard shortcuts:
+#
+#  Prettify Query:  Shift-Ctrl-P (or press the prettify button above)
+#
+#     Merge Query:  Shift-Ctrl-M (or press the merge button above)
+#
+#       Run Query:  Ctrl-Enter (or press the play button above)
+#
+#   Auto Complete:  Ctrl-Space (or just start typing)
+#
+
+
+# mutation {
+#   logUser(input:{
+#     username: "gabo@unal.com",
+#     password: "123456"
+#   }){
+#     refresh
+#     access
+#   }
+# # }
+
+# query {
+#   events {
+#     name
+#     id
+#     ownerId
+#     ownerType
+#     eventStartDate
+#     eventFinishDate
+#     eventType
+#     description
+#     latitude
+#     longitude
+#     status
+#     url
+#   }
+# }
+
+# query {
+#   groupTypes{
+#     id_type
+#     name
+#   }
+# }
+
+
+# mutation{
+  
+# }
+
+# query {
+#   allGroups{
+#     id_type
+#     id_group
+#     description
+#     name
+#     type
+#     contact_number
+#     followers
+#     admins {
+#       name
+#     }
+#   }
+# }
+
+
+# query {
+#   users {
+#     id
+#     name
+#   }
+# }
+
+# mutation {
+#   createNewGroup(
+#     id_user: 1
+#     input:{
+#       id_type: 1
+#       name: "salsun"
+#       description: "desc"
+#       contact_number: "3154709087"
+#       status: "Ok"
+#     }
+#     token: {
+#       token: "token"
+#     }
+#   ){
+#     name
+#   }
+# }
+
+
+# query {
+#   allImages{
+#     _id
+#     profile
+#     path
+#     id_type
+#     id_group
+#     id_event
+#   }
+# }
+
+#########################
+###### Perfil Usuario ###
+#########################
+query {
+  userProfile(userId: 1){
+    name
+    phone_number
+    groupsFollowing{
+      name
+      description
+    }
+    eventsCreated {
+      id
+      name
+      description
+    }
+  }
+}
+
+# query {
+#   groupsByUser (userId:1){
+#     group_id
+#   }
+# }
+
+
+#######################
+###### Crear evnto
+# #####################
+# mutation {
+#   createEvent(
+#     input:{
+#       ownerId: 1
+#       ownerType: "user"
+#       name: "test event"
+#       eventStartDate: "2020-04-20T06:00:00Z"
+#       eventFinishDate: "2020-04-20T06:00:00Z"
+#       description: "desc"
+#       latitude: "1"
+#       longitude: "2"
+#       status: "Ok"
+#       eventType: "official"
+#       url: "some url"
+#     }
+#   ){
+#     message
+#     status
+#   }
+# }
+
+######################
+##### Event Profle ###
+######################
+
+# query {
+#   eventProfile(eventId: 9, userId:4){
+#   	id
+#     name
+#     description
+#     latitude
+#     longitude
+#     comments {
+#       id
+#       text
+#       likes
+#       dislikes
+#       name
+#     }
+#     assistant{
+#       name
+#     }
+#   }
+# }
+
+
+#############
+### Events 
+#############
+# query {
+#   events{
+#     id
+#     name
+#     description
+#     url
+#     photo
+#   }
+# }
+
+###############3
+#### User profile
+##############3
+# query {
+#   userProfile(userId:4){
+#     id
+#     name
+#     career
+#     age
+#     phone_number
+#     groupsFollowing{
+#       id_group
+#       id_type
+#       type
+#       name
+#       description
+#     }
+#     eventsCreated {
+#       id
+#       name
+#       description
+#     }
+#   }
+# }
+
+# query {
+#   todayEvents{
+#     name
+#   }
+# }
+
+
+#################
+### REgister
+##############33
+
+# mutation {
+#   userAuthcreate(input:{
+#     username: "gabo@unal.com",
+#     password: "123456",
+#     name: "Gabriel",
+#     phone_number: "3154801423",
+#     age: 20,
+#     career: "Ing de sistemas",
+#     status: "Ok"
+#   }){
+#     message
+#   }
+# }
+
+# Welcome to GraphiQL
+#
+# GraphiQL is an in-browser tool for writing, validating, and
+# testing GraphQL queries.
+#
+# Type queries into this side of the screen, and you will see intelligent
+# typeaheads aware of the current GraphQL type schema and live syntax and
+# validation errors highlighted within the text.
+#
+# GraphQL queries typically start with a "{" character. Lines that starts
+# with a # are ignored.
+#
+# An example GraphQL query might look like:
+#
+#     {
+#       field(arg: "value") {
+#         subField
+#       }SQLAlchemy
+#     }
+#
+# Keyboard shortcuts:
+#
+#  Prettify Query:  Shift-Ctrl-P (or press the prettify button above)
+#
+#     Merge Query:  Shift-Ctrl-M (or press the merge button above)
+#
+#       Run Query:  Ctrl-Enter (or press the play button above)
+#
+#   Auto Complete:  Ctrl-Space (or just start typing)
+#
+
+
+
+######################################################
+######################################################
+
+# query {
+#   allGroups {
+#     id_group
+#     id_type
+#     type
+#     name
+#     description
+#     created_date
+#     contact_number
+#     status
+#     followers
+#     events {
+#       name
+#     }
+#     admins {
+#       name
+#     }
+#     photo
+#   }
+# }
+
+
+#######################################
+
+# mutate {
+#   editGroup(id_user: ID!,input: GroupInput, token: AccessToken):
+# }
+
+# query {
+#   events {
+#     name
+#     eventStartDate
+#     eventFinishDate
+#     eventType
+#   }
+# }
+
+
+#####################
+###### Info grupos
+#####################
+# query {
+#   allGroups{
+#     id_type
+#     id_group
+#     name
+#     type
+#   }
+# }
+
+
+query {
+  userProfile(userId: 7){
+    name
+    phone_number
+    groupsFollowing{
+      name
+      description
+    }
+    photo
+    eventsCreated {
+      id
+      name
+      description
+    }
+  }
+}
+
+# ##################
+# # Conseguir los tipos
+# #################
+# query {
+#   groupTypes{
+#     id_type
+#     name
+#   }
+# }
+
+# ###########################
+# ##### Filtrar por tipo id
+# ###########################
+# query {
+#   filterGroups(id_type:3){
+#     id_group
+#     type
+#     name
+#   }
+# }
+
+
+# ###########################
+# ##### Filtrar por nombre
+# ###########################
+# query {
+#   filterGroups(name: "sem"){
+#     id_group
+#     type
+#     name
+#   }
+# }
+
+# ############################
+# ###### Filtrar por tipo id y nombre 
+# ############################
+# query {
+#   filterGroups(name: "sem", id_type: 3){
+#     id_group
+#     type
+#     name
+#   }
+# }
+
+
+
+#######################################
+
+# query {
+#   groupProfile(id:7){
+#     id_group
+#     id_type
+#     type
+#     name
+#     description
+#     created_date
+#     contact_number
+#     status
+#     followers
+#     events {
+#       name
+#     }
+#     admins {
+#       name
+#     }
+#     photo
+#   }
+# }
+
+
+#########################
+
+
+# mutation {
+#   addUserGroup(
+#     input:{
+#     	user_id: 4
+#     	group_id: 8
+#     	status: "regular"
+#     }
+#   ){
+#     message
+#   }
+# }
+
+
+# mutation {
+#   addUserEvent(
+#     input:{
+#     	user_id: 4
+#     	event_id: Int!
+#       assistance: true
+#       interested: true
+#     }
+#   ){
+#     message
+#   }
+# }
+
+
+
+##########################
+
+
+
+
+
+
+
+############################3
+
+
+# query {
+# filterGroups{
+  
+# }
+# }
+
+
+
+# mutation {
+#   deleteGroupAuth(
+#     id_user: 3, 
+#     id_group: 6, 
+#     token: {
+#       token: "token"
+#     }){
+#     message
+#   }
+# }
+
+# mutation {
+#   createNewGroup (
+#     id_user: 1, 
+#     input: {
+#       id_type: 3
+#       name: "semillero LISI"
+#       description: "descripcion"
+#       contact_number: "3154805555"
+#       status: "Ok"
+#     }, 
+#     token: {
+#       token: "token"
+#   }){
+#     id_group
+#     type
+#     name
+#     description
+#   }
+# }
+
+
+# query {
+#   users{
+#     id
+#     name
+#   }
+# }
+
+
+
+########################################################
+########################################################
+
+
+
+
+# mutation {
+#   editEvent(
+#     input: {
+#       ownerType: "user",
+#       ownerId: 4, 
+#       eventType: "official", 
+#       name: "Evento 2", 
+#       eventStartDate: "2019-04-20T05:00:00.00Z",
+#       eventFinishDate: "2020-04-20T05:00:00.00Z",
+#       description: "Prueba evento"
+#     }
+#     id:11,
+#     token:{
+#       token:""
+#     }){
+#     message
+#   }
+# }
+
+
+# mutation {
+#   addUser(input:{
+#     username: "jmedinan"
+#     password: "1234567"
+#     name: "Juan Diego"
+#     phone_number: "3176475556"
+#     age: 20
+#     career: "Ingenieria de sistemas"
+#     status: "Ok"
+#   }){
+#     message
+#   }
+# }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# query {
+#   filterGroups(name:"P"){
+#     name
+#     type
+#   }
+# }
+
+# mutation{
+#   createNewGroup(id_user:3, 
+#     input: {
+#       id_type: 2
+#       name: "sem 4"
+#       description: "que bune semillero"
+#       contact_number: "1234"
+#       status: "ok"
+#     }, 
+#     token: {
+#       token : "token chevere"
+#     }){
+#     	name
+#     	type
+#     	id_type
+#     	followers
+#   }
+# }
+
+# query {
+#   allGroups{
+#     name
+#     id_type
+#     type
+#     followers
+#   }
+# }
+
+
+# mutation {
+#   deleteGroupAuth (id_user:3, id_group:1, token:{token:"abc"}){
+#     message
+#     status
+#   }
+# }
+
+# mutation {
+#   createNewGroup(
+#     id_user:8, 
+#     input: {
+#       id_type: 4
+#       name: "patitos!!"
+#       description: "patitos!!"
+#       contact_number: "F de focas"
+#       status: "F"
+#     }, 
+#     token: {
+#       token: "token favorito"
+#     }
+#   ){
+#     name
+#     description
+#   }
+# }
+
+
+
+
+# const groupViewsQueries = `
+#   allGroups: [Group!]!
+#   groupProfile (id:ID!): Group
+#   filterGroups (name: String, id_type: Int): [Group!]!
+# `;
+
+# const groupViewsMutations = `
+#   editGroup(id_user: ID!,input: GroupInput, token: AccessToken): Message
+#   createUser(input: LogRegInput): Message
+#   createNewGroup (id_user:ID!, input: GroupInput, token: AccessToken ): Group
+# `;
+
+
+# query {
+#   groupByID(groupId:1){
+#     name
+#   }
+# }
+
+# query {
+#   allGroups{
+#     id_group
+#     name
+#     type
+#   }
+# }
+
+# query {
+#   groupProfile(id:2){
+#     id_group
+#     name
+#     id_type
+#     type
+#   }
+# }
+
+# query {
+#   filterGroups(name:"sem"){
+#     id_group
+#      name
+#      id_type
+#      type
+#   }
+# }
+
+
+
+
+

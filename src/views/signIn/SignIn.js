@@ -4,6 +4,8 @@ import SignInForm from "../../components/signInForm";
 import "./index.css";
 import gql from 'graphql-tag';
 import {  useMutation } from "@apollo/react-hooks";
+import store from "../../data/redux/store";
+import {addUserId, addAccessToken, addRefreshToken} from '../../data/redux/actions/actions';
 
 const SIGNIN_MUTATION = gql`
 mutation LogUser($username: String!, $password: String!){
@@ -16,12 +18,21 @@ mutation LogUser($username: String!, $password: String!){
   }
 }
 `;
+const USERID_MUTATION = gql`
+mutation VrfTok($token: String!){
+  vrfTok(input:{
+    token: $token
+  })
+}
+`;
+
 
 const SignIn = (props) => {
   const history = useHistory();
   const [successful, setSuccessful] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [signInMutation, { loading}] = useMutation(SIGNIN_MUTATION, { errorPolicy: 'all' });
+  const [userIdMutation, { loadingUserMutation}] = useMutation(USERID_MUTATION, { errorPolicy: 'all' });
 
   const onFinish = async values => {
     console.log('Received values of form: ', values);
@@ -32,7 +43,17 @@ const SignIn = (props) => {
           password: values.password,
         } 
       });
+      
+      
+      store.dispatch(addRefreshToken(data.logUser.refresh));
+      store.dispatch(addAccessToken(data.logUser.access));
 
+      const idUser = await userIdMutation({
+        variables:{
+          token: data.logUser.access
+        }
+      });
+      store.dispatch(addUserId(idUser.data.vrfTok));
       setSuccessful(true);
     } catch(e){
       console.log({e});

@@ -3,6 +3,9 @@ import "antd/dist/antd.css";
 import { Form, Select, Input, Button, DatePicker } from "antd";
 
 const { Option } = Select;
+const { RangePicker } = DatePicker;
+
+
 
 const prefixSelector = (
   <Form.Item name="prefix" noStyle>
@@ -13,8 +16,8 @@ const prefixSelector = (
   </Form.Item>
 );
 
-const CreateGroup = (props) => {
-  const { handleSubmit, groupTypes } = props;
+const CreateEvent = (props) => {
+  const { handleSubmit } = props;
 
   return (
       <Form
@@ -24,21 +27,6 @@ const CreateGroup = (props) => {
         layout="vertical"
         id="createGroup"
       >
-        <Form.Item
-          label="Tipo Grupo"
-          wrapperCol={{ span: 24, offset: 0 }}
-          name="groupType"
-          rules={[{ required: true, message: "Por favor seleccione un tipo" }]}
-        >
-          <Select
-            placeholder="Seleccione el tipo de grupo"
-            // onChange={handleSelectChange}
-          >
-            {groupTypes.groupTypes.map((value) => (
-              <Option key={value.id_type} value={value.id_type}>{value.name}</Option>
-            ))}
-          </Select>
-        </Form.Item>
         <Form.Item
           label="Nombre"
           labelAlign="right"
@@ -56,6 +44,14 @@ const CreateGroup = (props) => {
           rules={[{ required: true, message: "Ingresa una descripcion" }]}
         >
           <Input />
+        </Form.Item>
+        <Form.Item
+          label="Fechas"
+          wrapperCol={{ span: 24, offset: 0 }}
+          name="date"
+          rules={[{ required: true, message: "Ingresa una fecha" }]}
+        >
+          <RangePicker showTime />
         </Form.Item>
         <Form.Item
           name="phone"
@@ -82,4 +78,4 @@ const CreateGroup = (props) => {
   );
 };
 
-export default CreateGroup;
+export default CreateEvent;

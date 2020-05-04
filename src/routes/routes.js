@@ -13,7 +13,7 @@ import UserProfile from "../views/userProfile";
 // import EditEvent from "../views/editEvent";
 // import EditProfile from "../views/editProfile";
 import CreateGroup from "../views/createGroup";
-// import CreateEvent from "../views/createEvent";
+import CreateEvent from "../views/createEvent";
 // import CreateProfile from "../views/createProfile";
 // import NotFound from "../views/notFound";
 
@@ -30,6 +30,7 @@ const routes = () => {
           <Route exact path="/createGroup" component={CreateGroup} />
           <Route exact path="/eventProfile/:id" component={EventProfile} />
           <Route exact path="/userProfile/:id" component={UserProfile} />
+          <Route exact path="/createEvent" component={CreateEvent} />
         </MainLayout>
       </Switch>
     </Routes>
