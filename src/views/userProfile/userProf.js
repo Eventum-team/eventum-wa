@@ -52,7 +52,7 @@ const UserProfile = ({ match }) => {
   if (!loading){
     for (let i = 0; i < data.userProfile.groupsFollowing.length; i++) {
       grList.push({
-        href: 'http://ant.design',//'/rutagrupos/'+data.userProfile.groupsFollowing[i].id_group,
+        href: `/groupProfile/${data.userProfile.groupsFollowing[i].id_group}`,//'/rutagrupos/'+data.userProfile.groupsFollowing[i].id_group,
         name: data.userProfile.groupsFollowing[i].name,
         avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
         picture: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png",

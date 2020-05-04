@@ -20,8 +20,6 @@
     "graphql-tag": "^2.10.3",
     "markers-on-map-react": "^1.2.0",
     "moment": "^2.24.0",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
     "react-infinite-scroller": "^1.2.4",
     "react-redux": "^7.2.0",
     "react-router": "^5.1.2",
@@ -51,5 +49,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   }
 }

@@ -6,6 +6,7 @@ import gql from 'graphql-tag';
 import {  useMutation } from "@apollo/react-hooks";
 import store from "../../data/redux/store";
 import {addUserId, addAccessToken, addRefreshToken} from '../../data/redux/actions/actions';
+import { useDispatch, useSelector } from "react-redux";
 
 const SIGNIN_MUTATION = gql`
 mutation LogUser($username: String!, $password: String!){
@@ -45,15 +46,18 @@ const SignIn = (props) => {
       });
       
       
-      store.dispatch(addRefreshToken(data.logUser.refresh));
-      store.dispatch(addAccessToken(data.logUser.access));
+      localStorage.setItem('access', data.logUser.access);
+      localStorage.setItem('refresh', data.logUser.refresh);
 
       const idUser = await userIdMutation({
         variables:{
           token: data.logUser.access
         }
       });
-      store.dispatch(addUserId(idUser.data.vrfTok));
+      store.dispatch(addUserId());
+
+      localStorage.setItem('userId', idUser.data.vrfTok);
+      
       setSuccessful(true);
     } catch(e){
       console.log({e});

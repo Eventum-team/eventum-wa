@@ -81,6 +81,7 @@ const CreateGroup = (props) => {
   const [successful, setSuccessful] = useState(false);
   const { loading, error, data } = useQuery(GROUP_TYPES_QUERY);
   const [createGroupMutation, { loadingCreate}] = useMutation(CREATE_GROUP_MUTATION, { errorPolicy: 'all' });
+  const userId =  localStorage.getItem('userId');
 
   const handleSubmit = (values) => {
     console.log(values);
@@ -92,7 +93,7 @@ const CreateGroup = (props) => {
         contact_number: values.phone,
         status: "Ok",
         token: "token",
-        id_user: parseInt("1")
+        id_user: parseInt(userId)
       }
     });
     setSuccessful(true);

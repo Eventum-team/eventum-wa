@@ -5,18 +5,12 @@ import Icon from "@ant-design/icons";
 import { NavLink } from "react-router-dom";
 import "./index.css";
 import EventumIcon from "../../assets/icons/eventumIconApp.png";
-import store from "../../data/redux/store";
 
 
 const { Header } = Layout;
 const { SubMenu } = Menu;
 
 const Navbar = () => {
-
-  const state = store.getState();
-  console.log("------------------------");
-  console.log(state);
-  console.log("------------------------");
 
   return (
     <Header
@@ -62,12 +56,12 @@ const Navbar = () => {
         }}
       >
         <Menu.Item key="1">
-          <NavLink activeClassName="active" to="/cattle">
+          <NavLink activeClassName="active" to="/searchEvents">
             Eventos
           </NavLink>
         </Menu.Item>
         <Menu.Item key="2">
-          <NavLink activeClassName="active" to="trips">
+          <NavLink activeClassName="active" to="/searchGroups">
             Grupos
           </NavLink>
         </Menu.Item>
@@ -96,7 +90,7 @@ const Navbar = () => {
             </NavLink>
           </Menu.Item>
           <Menu.Item key="8">
-            <NavLink activeClassName="active" to={`/userProfile/${state.userId}`}>
+            <NavLink activeClassName="active" to={`/userProfile/${"4"}`}>
               Mi perfil
             </NavLink>
           </Menu.Item>

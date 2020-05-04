@@ -10,7 +10,6 @@ import Successful from "../../components/succesfulOperation";
 import backgroundImage from "../../assets/imgs/undraw_schedule_pnbk.png";
 import {  useMutation, useQuery } from "@apollo/react-hooks";
 import gql from 'graphql-tag';
-import store from "../../data/redux/store";
 
 const { Title } = Typography;
 
@@ -59,27 +58,25 @@ const CreateGroup = (props) => {
   // const dispatch = useDispatch();
   const [successful, setSuccessful] = useState(false);
   const [createEventMutation, { loading}] = useMutation(CREATE_EVENT_MUTATION, { errorPolicy: 'all' });
+  const userId =  localStorage.getItem('userId');
 
   const handleSubmit = (values) => {
     console.log(values);
     const formatedDates = values.date.map(formatDate);
 
-    const state = store.getState();
 
-    console.log("----");
-    console.log(state);
-    console.log("----");
+    
 
     createEventMutation({
       variables:{
-        ownerId: parseInt(state.userId),
+        ownerId: parseInt(userId),
         ownerType: "user",
         name: values.groupName,
         eventStartDate: formatedDates[0],
         eventFinishDate: formatedDates[1],
         description: values.description,
-        latitude: "4.6097100",
-        longitude: "-74.0817500",
+        latitude: "4.635462",
+        longitude: "-74.082722",
         status: "active",
         eventType: "official",
         url: "",
