@@ -12,7 +12,7 @@ const EventoUsuario = (props) => {
       style={{ width: '100%' }}
       extra={<div><Button type="primary">Eventos a los que iré</Button>
                   <Button type="primary">Eventos Creados</Button>
-                  <Button type="primary" shape="circle" icon={<PlusOutlined />} /></div>}
+                  <Button href='/createEvent' type="primary" shape="circle" icon={<PlusOutlined />} /></div>}
 
       >
       <List
