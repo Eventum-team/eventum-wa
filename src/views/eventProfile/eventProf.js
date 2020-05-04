@@ -10,9 +10,10 @@ import { Row, Col, Avatar } from 'antd';
 import gql from 'graphql-tag';
 import {useQuery} from "@apollo/react-hooks";
 import Spinner from "../../components/spinner";
-
-
+//updateUserEvent(userId: Int, eventId: Int, input: UserEventInputUpdate): Message!
+//deleteUserEvent(userId: Int, eventId: Int): Message!
 //GRAPHQL
+
 
 const EVENT_PROFILE_QUERY = gql`
 query eProfile($eventId: ID!, $userId: ID!){
@@ -38,27 +39,31 @@ query eProfile($eventId: ID!, $userId: ID!){
 }
 `;
 
+const activeuser = parseInt(localStorage.getItem('userId'));
+
+
 const EventProfile = ({ match }) => {
 
   const evId=match.params.id
+
   const { loading, error, data } = useQuery(EVENT_PROFILE_QUERY, {
     variables: {
       eventId: evId,
-      userId: 4,
+      userId: activeuser,
     }
   });
 
-  const evAsist = false /// if active user is on alist
+  var evAsist = false
+
   const evPhoto = "../../assets/backgrounds/ben-duchac-96DW4Pow3qI-unsplash.jpg"
-  //PRUEBAS PARA LATITUD Y LONGITUD NO VÁLIDAS
-  /*
-  console.log(parseInt(data.eventProfile.latitude.split(".")[0]))
-  console.log(parseInt(data.eventProfile.longitude.split(".")[0]))
-*/
+
+
   //PRUEBA PARA ASISTENTES
   const aList = [];
+  const idAList = [];
   if (!loading){
     for (let i = 0; i < data.eventProfile.assistant.length; i++) {
+      idAList.push(parseInt(data.eventProfile.assistant[i].id));
       aList.push({
         href: '/userProfile/'+data.eventProfile.assistant[i].id,
         name: data.eventProfile.assistant[i].name,
@@ -66,11 +71,12 @@ const EventProfile = ({ match }) => {
       });
     }
   }
-
+  if (!loading){evAsist= idAList.includes(activeuser)}
+  console.log(idAList)
+  console.log(evAsist)
   //PRUEBA PARA COMENTARIOS
   const commentList = [];
   if (!loading){
-    
     for (let i = 0; i < data.eventProfile.comments.length; i++) {
       commentList.push({
         href: '/userProfile/'+data.eventProfile.comments[i].idUser,
@@ -98,12 +104,14 @@ const EventProfile = ({ match }) => {
               start= {data.eventProfile.eventStartDate}
               finish= {data.eventProfile.eventFinishDate}
               asist= {evAsist}
+              actUser= {activeuser}
+              eventID= {evId}
               />
           </Row>
           <Row>
             <Col flex={10}><EventMap
-              lat={parseInt(data.eventProfile.latitude)}
-              lng={parseInt(data.eventProfile.longitude)}/>
+              lat={parseInt(data.eventProfile.latitude.split(".")[0])/10}
+              lng={parseInt(data.eventProfile.longitude.split(".")[0])/10}/>
             </Col>
             <Col flex={2}><AssistList data={aList}/></Col>
           </Row>
