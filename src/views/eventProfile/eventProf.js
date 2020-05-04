@@ -38,7 +38,13 @@ query eProfile($eventId: ID!, $userId: ID!){
   }
 }
 `;
-
+const GET_USER_NAME = gql`
+query getUserProfile($userId: Int!) {
+  userProfile(userId: $userId){
+    name
+  }
+}
+`;
 const activeuser = parseInt(localStorage.getItem('userId'));
 
 
@@ -53,15 +59,22 @@ const EventProfile = ({ match }) => {
     }
   });
 
-  var evAsist = false
+  const { data: data2, error: error2, loading: loading2} = useQuery(GET_USER_NAME, {
+    variables: {
+      userId: activeuser,
+    }
+  });
 
+  var evAsist = false
+  var load = true
+  if(!loading && !loading2){load=false}
   const evPhoto = "../../assets/backgrounds/ben-duchac-96DW4Pow3qI-unsplash.jpg"
 
 
   //PRUEBA PARA ASISTENTES
   const aList = [];
   const idAList = [];
-  if (!loading){
+  if (!load){
     for (let i = 0; i < data.eventProfile.assistant.length; i++) {
       idAList.push(parseInt(data.eventProfile.assistant[i].id));
       aList.push({
@@ -71,9 +84,7 @@ const EventProfile = ({ match }) => {
       });
     }
   }
-  if (!loading){evAsist= idAList.includes(activeuser)}
-  console.log(idAList)
-  console.log(evAsist)
+  if (!load){evAsist= idAList.includes(activeuser)}
   //PRUEBA PARA COMENTARIOS
   const commentList = [];
   if (!loading){
@@ -91,8 +102,8 @@ const EventProfile = ({ match }) => {
 
   return (
     <div>
-      {loading && <Spinner />}
-      {!loading && (
+      {load && <Spinner />}
+      {!load && (
     <React.Fragment>
       <EventBanner name= {data.eventProfile.name} photo={evPhoto}/>
 
@@ -110,13 +121,19 @@ const EventProfile = ({ match }) => {
           </Row>
           <Row>
             <Col flex={10}><EventMap
-              lat={parseInt(data.eventProfile.latitude.split(".")[0])/10}
-              lng={parseInt(data.eventProfile.longitude.split(".")[0])/10}/>
+              lat={parseInt(data.eventProfile.latitude)}
+              lng={parseInt(data.eventProfile.longitude)}/>
             </Col>
             <Col flex={2}><AssistList data={aList}/></Col>
           </Row>
           <Row>
-            <EventComments data={commentList}/>
+            <EventComments
+              name={data2.userProfile.name}
+              idu={activeuser}
+              data={commentList}
+              ide={evId}
+              pending={loading}
+              />
           </Row>
         </ContentLayout>
 
