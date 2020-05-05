@@ -8,7 +8,7 @@ const cache = new InMemoryCache()
 
 
 const client = new ApolloClient({
-  uri: process.env.GATEWAY_URL || 'http://190.24.19.228:3000/graphql', cache
+  uri: process.env.GATEWAY_URL || 'http://190.24.19.228:5000/graphql', cache
 });
 
 /*

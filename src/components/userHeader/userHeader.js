@@ -3,7 +3,6 @@ import "antd/dist/antd.css";
 import { Layout, Menu } from "antd";
 import "./index.css";
 import { Card } from 'antd';
-import picture from "../../assets/backgrounds/william-recinos-qtYhAQnIwSE-unsplash.jpg";
 
 const { Meta } = Card;
 const UserHeader = (props) => {

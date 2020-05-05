@@ -12,7 +12,7 @@ const { Header, Footer, Sider, Content } = Layout;
 
 const GET_EVENTS = gql`
 query {
-  events{
+  allEvents{
     id
     name
     description
@@ -30,17 +30,16 @@ const Home = () => {
   const evList = [];
 
   if (!loading){
-    console.log(data.events);
-    for (let i = 0; i < data.events.length; i++) {
+    for (let i = 0; i < data.allEvents.length; i++) {
       var photo = "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-      if (data.events[i].photo!=null){
-        photo = data.events[i].photo;
+      if (data.allEvents[i].photo!=null){
+        photo = data.allEvents[i].photo;
       }
       evList.push({
-        href: '/eventProfile/'+data.events[i].id,
-        name: data.events[i].name,
+        href: '/eventProfile/'+data.allEvents[i].id,
+        name: data.allEvents[i].name,
         picture: photo,
-        description: data.events[i].description,
+        description: data.allEvents[i].description,
       });
     }
   }

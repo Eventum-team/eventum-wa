@@ -1,7 +1,7 @@
 import React from "react";
 import GroupCard from "../../components/groupCard";
 import GroupBanner from '../../components/groupBanner'
-import AssistList from "../../components/assistList";
+import AssistList from "../../components/adminList";
 import EventsList from "../../components/eventList";
 import ContentLayout from "../../components/contentLayout";
 import { Layout } from 'antd';
@@ -51,7 +51,12 @@ const GroupProfile = (props) => {
 
   var aList = data.groupProfile.admins;
 
-  const grPhoto = "../../assets/backgrounds/ben-duchac-96DW4Pow3qI-unsplash.jpg"
+  var grPhoto = "https://source.unsplash.com/random"
+  if (!loading){
+    if(data.groupProfile.photo!=null){
+      grPhoto = data.groupProfile.photo;
+    }
+  }
 
   return(
     <div>
@@ -72,7 +77,7 @@ const GroupProfile = (props) => {
         </ContentLayout>
       </React.Fragment>
     </div>
-    
+
   );
 }
 

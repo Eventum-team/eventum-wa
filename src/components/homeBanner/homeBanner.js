@@ -5,7 +5,6 @@ import { NavLink } from "react-router-dom";
 import Background from "../../assets/backgrounds/ben-duchac-96DW4Pow3qI-unsplash.jpg"
 const { Header, Footer, Sider, Content } = Layout;
 const HomeBanner= () => {
-  console.log(Background)
   return (
     <div  >
       <Layout

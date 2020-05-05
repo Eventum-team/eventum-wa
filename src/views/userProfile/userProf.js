@@ -27,11 +27,13 @@ query getUserProfile($userId: Int!) {
       type
       name
       description
+      photo
     }
     eventsCreated {
       id
       name
       description
+      photo
     }
   }
 }
@@ -50,13 +52,15 @@ const UserProfile = ({ match }) => {
   });
   //https://source.unsplash.com/random
   var profilePhoto = 'https://source.unsplash.com/random'
-  if (!loading && data.userProfile.photo!=null){
-    profilePhoto = data.userProfile.photo;
+  if (!loading){
+    if (data.userProfile.photo!=null){
+      profilePhoto = data.userProfile.photo;
+    }
   }
   const grList = [];
   if (!loading){
     for (let i = 0; i < data.userProfile.groupsFollowing.length; i++) {
-      var groupPhoto = "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+      var groupPhoto = 'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png'
       if (data.userProfile.groupsFollowing[i].photo!=null){
         groupPhoto = data.userProfile.groupsFollowing[i].photo;
       }

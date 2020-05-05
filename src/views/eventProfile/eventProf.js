@@ -71,8 +71,10 @@ const EventProfile = ({ match }) => {
   var load = true
   if(!loading && !loading2){load=false}
   var evPhoto = "https://source.unsplash.com/random"
-  if (!load && data.eventProfile.photo!=null){
-    evPhoto = data.eventProfile.photo;
+  if (!load){
+    if(data.eventProfile.photo!=null){
+      evPhoto = data.eventProfile.photo;
+    }
   }
 
   //PRUEBA PARA ASISTENTES
@@ -86,6 +88,7 @@ const EventProfile = ({ match }) => {
       if (data.eventProfile.assistant[i].photo!=null){
         photo = data.eventProfile.assistant[i].photo;
       }
+      console.log(data.eventProfile.assistant[i].photo);
       idAList.push(parseInt(data.eventProfile.assistant[i].id));
       aList.push({
         href: '/userProfile/'+data.eventProfile.assistant[i].id,
