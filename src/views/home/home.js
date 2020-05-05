@@ -32,11 +32,14 @@ const Home = () => {
   if (!loading){
     console.log(data.events);
     for (let i = 0; i < data.events.length; i++) {
+      var photo = "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+      if (data.events[i].photo!=null){
+        photo = data.events[i].photo;
+      }
       evList.push({
         href: '/eventProfile/'+data.events[i].id,
         name: data.events[i].name,
-        avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-        picture: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png",
+        picture: photo,
         description: data.events[i].description,
       });
     }

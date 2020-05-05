@@ -52,7 +52,7 @@ class AssistList extends React.Component {
               <List.Item key={item.id}>
                 <List.Item.Meta
                   avatar={
-                    <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                    <Avatar src={item.avatar} />
                   }
                   title={<a href={item.href}>{item.name}</a>}
                 />

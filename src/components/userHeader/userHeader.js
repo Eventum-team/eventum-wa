@@ -10,7 +10,7 @@ const UserHeader = (props) => {
   return (
     <Card
       style={{ width: "100%" }}
-      cover={<div className="landscape"><img className="center" alt="picture" src={picture} /></div>}
+      cover={<div className="landscape"><img className="center" alt="picture" src={props.photo} /></div>}
     >
       <Meta title={props.name} style={{textAlign: 'center'}}/>
     </Card>

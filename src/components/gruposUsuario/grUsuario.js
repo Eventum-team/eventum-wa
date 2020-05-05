@@ -37,7 +37,6 @@ const GrupoUsuario = (props) => {
             }
           >
             <List.Item.Meta
-              avatar={<Avatar src={item.avatar} />}
               title={<a href={item.href}>{item.name}</a>}
             />
             {item.description}

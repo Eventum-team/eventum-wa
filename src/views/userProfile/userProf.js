@@ -20,6 +20,7 @@ query getUserProfile($userId: Int!) {
     career
     age
     phone_number
+    photo
     groupsFollowing{
       id_group
       id_type
@@ -47,15 +48,22 @@ const UserProfile = ({ match }) => {
       userId: parseInt(uId),
     }
   });
-
+  //https://source.unsplash.com/random
+  var profilePhoto = 'https://source.unsplash.com/random'
+  if (!loading && data.userProfile.photo!=null){
+    profilePhoto = data.userProfile.photo;
+  }
   const grList = [];
   if (!loading){
     for (let i = 0; i < data.userProfile.groupsFollowing.length; i++) {
+      var groupPhoto = "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+      if (data.userProfile.groupsFollowing[i].photo!=null){
+        groupPhoto = data.userProfile.groupsFollowing[i].photo;
+      }
       grList.push({
         href: `/groupProfile/${data.userProfile.groupsFollowing[i].id_group}`,//'/rutagrupos/'+data.userProfile.groupsFollowing[i].id_group,
         name: data.userProfile.groupsFollowing[i].name,
-        avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-        picture: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png",
+        picture: groupPhoto,
         description: data.userProfile.groupsFollowing[i].description,
       });
     }
@@ -64,11 +72,14 @@ const UserProfile = ({ match }) => {
   const evList = [];
   if (!loading){
     for (let i = 0; i < data.userProfile.eventsCreated.length; i++) {
+      var eventPhoto = "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+      if (data.userProfile.eventsCreated[i].photo!=null){
+        eventPhoto = data.userProfile.eventsCreated[i].photo;
+      }
       evList.push({
         href: '/eventProfile/'+data.userProfile.eventsCreated[i].id,
         name: data.userProfile.eventsCreated[i].name,
-        avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-        picture: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png",
+        picture: eventPhoto,
         description:data.userProfile.eventsCreated[i].description,
       });
     }
@@ -81,7 +92,7 @@ const UserProfile = ({ match }) => {
       {!loading && (
       <ContentLayout>
         <Row>
-          <UserHeader name={data.userProfile.name}/>
+          <UserHeader name={data.userProfile.name} photo={profilePhoto}/>
         </Row>
         <Row>
           <UserInfo name={data.userProfile.name} phone={data.userProfile.phone_number} age={data.userProfile.age} career={data.userProfile.career} />

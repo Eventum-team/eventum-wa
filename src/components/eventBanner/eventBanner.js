@@ -11,7 +11,7 @@ const EventBanner= (props) => {
     <div  >
       <Layout
         style={{
-                backgroundImage: "url("+require("../../assets/backgrounds/ben-duchac-96DW4Pow3qI-unsplash.jpg")+")",
+                backgroundImage: "url("+props.photo+")",
                 width: "100%",
                 height:"400px",
                 backgroundSize: "cover",

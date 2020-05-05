@@ -19,6 +19,7 @@ const EVENT_PROFILE_QUERY = gql`
 query eProfile($eventId: ID!, $userId: ID!){
   eventProfile(eventId: $eventId, userId: $userId){
     name
+    photo
     description
     eventStartDate
     eventFinishDate
@@ -34,6 +35,7 @@ query eProfile($eventId: ID!, $userId: ID!){
     assistant{
       id
       name
+      photo
     }
   }
 }
@@ -47,7 +49,7 @@ query getUserProfile($userId: Int!) {
 `;
 const activeuser = parseInt(localStorage.getItem('userId'));
 
-
+//https://source.unsplash.com/random
 const EventProfile = ({ match }) => {
 
   const evId=match.params.id
@@ -68,19 +70,27 @@ const EventProfile = ({ match }) => {
   var evAsist = false
   var load = true
   if(!loading && !loading2){load=false}
-  const evPhoto = "../../assets/backgrounds/ben-duchac-96DW4Pow3qI-unsplash.jpg"
+  var evPhoto = "https://source.unsplash.com/random"
+  if (!load && data.eventProfile.photo!=null){
+    evPhoto = data.eventProfile.photo;
+  }
 
   //PRUEBA PARA ASISTENTES
   const aList = [];
   const idAList = [];
   if (!load){
+
     console.log(data);
     for (let i = 0; i < data.eventProfile.assistant.length; i++) {
+      var photo = 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
+      if (data.eventProfile.assistant[i].photo!=null){
+        photo = data.eventProfile.assistant[i].photo;
+      }
       idAList.push(parseInt(data.eventProfile.assistant[i].id));
       aList.push({
         href: '/userProfile/'+data.eventProfile.assistant[i].id,
         name: data.eventProfile.assistant[i].name,
-        avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+        avatar: photo,
       });
     }
   }
@@ -92,7 +102,6 @@ const EventProfile = ({ match }) => {
       commentList.push({
         href: '/userProfile/'+data.eventProfile.comments[i].idUser,
         name: data.eventProfile.comments[i].name,
-        avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
         text:data.eventProfile.comments[i].text,
         likes: data.eventProfile.comments[i].likes,
         dislikes: data.eventProfile.comments[i].dislikes,

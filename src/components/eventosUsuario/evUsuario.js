@@ -42,7 +42,6 @@ const EventoUsuario = (props) => {
                 ]}
               >
                 <Meta
-                  avatar={<Avatar src={item.avatar} />}
                   title={<a href={item.href}>{item.name}</a>}
                   description={item.description}
                 />
