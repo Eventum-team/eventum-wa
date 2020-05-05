@@ -70,11 +70,11 @@ const EventProfile = ({ match }) => {
   if(!loading && !loading2){load=false}
   const evPhoto = "../../assets/backgrounds/ben-duchac-96DW4Pow3qI-unsplash.jpg"
 
-
   //PRUEBA PARA ASISTENTES
   const aList = [];
   const idAList = [];
   if (!load){
+    console.log(data);
     for (let i = 0; i < data.eventProfile.assistant.length; i++) {
       idAList.push(parseInt(data.eventProfile.assistant[i].id));
       aList.push({

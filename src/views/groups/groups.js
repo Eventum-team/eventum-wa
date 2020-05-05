@@ -115,6 +115,7 @@ const Groups = () =>{
                     
                     Elige una categoría
                     <Select 
+                        style={{width: '200px', margin: '10px 20px'}}
                         options={categories}
                         onChange={handleChange}
                     />

@@ -60,6 +60,8 @@ const SignUp = (props) => {
 
   const handleSubmit = async (values) => {
     console.log('Received values of form: ', values);
+
+    
     try {
       const {data} = await signUpMutation({ 
         variables: { 
@@ -79,6 +81,7 @@ const SignUp = (props) => {
       const errorPromt = e.graphQLErrors[0].message.errors[0];
       setErrorMessage(errorPromt);
     }
+    
   };
 
   useEffect(() => {

@@ -55,7 +55,6 @@ const SignIn = (props) => {
         }
       });
       store.dispatch(addUserId());
-
       localStorage.setItem('userId', idUser.data.vrfTok);
       
       setSuccessful(true);

@@ -79,7 +79,7 @@ const CreateGroup = (props) => {
         longitude: "-74.082722",
         status: "active",
         eventType: "official",
-        url: "",
+        url: "https://agenciadenoticias.unal.edu.co/typo3temp/_processed_/csm_AgenciaNoticias_20190225-03_02_7e0ef5851b.jpg",
       }
     });
 
