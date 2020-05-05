@@ -121,8 +121,8 @@ const EventProfile = ({ match }) => {
           </Row>
           <Row>
             <Col flex={10}><EventMap
-              lat={parseInt(data.eventProfile.latitude)}
-              lng={parseInt(data.eventProfile.longitude)}/>
+              lat={parseFloat(data.eventProfile.latitude)}
+              lng={parseFloat(data.eventProfile.longitude)}/>
             </Col>
             <Col flex={2}><AssistList data={aList}/></Col>
           </Row>
