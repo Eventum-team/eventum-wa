@@ -2,19 +2,10 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "antd/dist/antd.css";
 import "./index.css";
-import {
-  Form,
-  Input,
-  Row,
-  Col,
-  Select,
-  Button,
-  Typography,
-  Alert,
-} from "antd";
+import { Form, Input, Row, Col, Select, Button, Typography, Alert } from "antd";
 import Spinner from "../../components/spinner";
-import PhotoLoader from '../photoLoader';
-
+import PhotoLoader from "../photoLoader";
+import EventumIcon from "../../assets/icons/eventumIcon.png";
 
 const { Option } = Select;
 const { Title } = Typography;
@@ -28,7 +19,6 @@ const SignUpForm = (props) => {
     setConfirmDirty(confirmDirty || !!value);
   };
 
-
   const formItemLayout = {
     labelCol: {
       xs: { span: 24 },
@@ -41,7 +31,7 @@ const SignUpForm = (props) => {
   };
 
   const prefixSelector = (
-    <Form.Item name="prefix" noStyle>
+    <Form.Item style={{ margin: "0" }} name="prefix" noStyle>
       <Select style={{ width: 70 }}>
         <Option value="01">+01</Option>
         <Option value="54">+54</Option>
@@ -66,16 +56,16 @@ const SignUpForm = (props) => {
     <div>
       <Form {...formItemLayout} onFinish={handleSubmit} className="login-form">
         <div className="center-text">
+          <img src={EventumIcon} style={{ height: 100 }} />
           <Title level={2}>Registrate</Title>
         </div>
-        <div>
-          <PhotoLoader onFinish={useImageUrl}/>
-        </div>
-        <Row type="" justify="" style={{ padding: "0 100px" }}>
+        <Row type="" justify="" style={{ padding: "0 100px", margin: 0 }}>
           <Col>
             <Form.Item
+              style={{ margin: "0" }}
               labelAlign="left"
               label="Nombre"
+              style={{ margin: "0" }}
               name="username"
               rules={[
                 {
@@ -87,6 +77,7 @@ const SignUpForm = (props) => {
               <Input />
             </Form.Item>
             <Form.Item
+              style={{ margin: "0" }}
               labelAlign="left"
               label="E-mail"
               name="email"
@@ -104,6 +95,7 @@ const SignUpForm = (props) => {
               <Input />
             </Form.Item>
             <Form.Item
+              style={{ margin: "0" }}
               labelAlign="left"
               label="Contraseña"
               name="password"
@@ -114,18 +106,20 @@ const SignUpForm = (props) => {
                   message: "Por favor ingresa una contraseña!",
                 },
                 {
-                  min: 2, message: 'La contraseña debe tener por lo menos 2 caracteres' 
+                  min: 2,
+                  message: "La contraseña debe tener por lo menos 2 caracteres",
                 },
               ]}
             >
               <Input.Password />
             </Form.Item>
             <Form.Item
+              style={{ margin: "0" }}
               labelAlign="left"
               label="Confirmar Contraseña"
               name="confirmPassword"
               extra="Verifica tu Contraseña"
-              ependencies={['password']}
+              ependencies={["password"]}
               hasFeedback
               rules={[
                 {
@@ -134,10 +128,12 @@ const SignUpForm = (props) => {
                 },
                 ({ getFieldValue }) => ({
                   validator(rule, value) {
-                    if (!value || getFieldValue('password') === value) {
+                    if (!value || getFieldValue("password") === value) {
                       return Promise.resolve();
                     }
-                    return Promise.reject('Las contraseñas que ingresaste no son validas');
+                    return Promise.reject(
+                      "Las contraseñas que ingresaste no son validas"
+                    );
                   },
                 }),
               ]}
@@ -146,44 +142,47 @@ const SignUpForm = (props) => {
             </Form.Item>
 
             <Form.Item
+              style={{ margin: "0" }}
               name="phone"
               label="Numero Celular"
               labelAlign="left"
             >
-              <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
+              <Input style={{ width: "100%" }} />
             </Form.Item>
 
-            <Form.Item 
+            <Form.Item
+              style={{ margin: "0" }}
               label="Carrera"
               name="career"
               labelAlign="left"
               rules={[
-                { 
-                  required: true, 
-                  message: 'Por favor pon tu carrera' 
+                {
+                  required: true,
+                  message: "Por favor pon tu carrera",
                 },
               ]}
             >
               <Input />
             </Form.Item>
 
-            <Form.Item 
+            <Form.Item
+              style={{ margin: "0" }}
               label="Edad"
               labelAlign="left"
               name="age"
               rules={[
-                { 
-                  required: true, 
-                  message: 'Por favor pon tu edad' 
+                {
+                  required: true,
+                  message: "Por favor pon tu edad",
                 },
               ]}
             >
-              <Input type='Number'/>
+              <Input type="Number" />
             </Form.Item>
           </Col>
         </Row>
         <Row type="" justify="center">
-          <Col>
+          <Col style={{ margin: 20 }}>
             {error && (
               <Alert
                 style={{ marginBottom: 20 }}
@@ -193,7 +192,11 @@ const SignUpForm = (props) => {
               />
             )}
             {pending && <Spinner />}
+            <div style={{ justifyContent: "center", display: "flex" }}>
+              <PhotoLoader onFinish={useImageUrl} />
+            </div>
             <Form.Item
+              style={{ margin: "0" }}
               className="center-text"
               style={{ display: "flex", justifyContent: "center" }}
             >

@@ -4,15 +4,13 @@ import { Layout, Menu } from "antd";
 import Icon from "@ant-design/icons";
 import { NavLink } from "react-router-dom";
 import "./index.css";
-import EventumIcon from "../../assets/icons/eventumIconApp.png";
-
+import EventumIcon from "../../assets/icons/eventumIcon.png";
 
 const { Header } = Layout;
 const { SubMenu } = Menu;
-const activeuser = parseInt(localStorage.getItem('userId'));
+const activeuser = parseInt(localStorage.getItem("userId"));
 
 const Navbar = () => {
-
   return (
     <Header
       style={{
@@ -75,23 +73,14 @@ const Navbar = () => {
             </span>
           }
         >
-          <Menu.Item key="5">
+          <Menu.Item style={{ background: "#31C8F8" }} key="7">
             <NavLink activeClassName="active" to="/signin">
-              Inicio Sesion
-            </NavLink>
-          </Menu.Item>
-          <Menu.Item key="6">
-            <NavLink activeClassName="active" to="/signup">
-              Registro
-            </NavLink>
-          </Menu.Item>
-          <Menu.Item key="7">
-            <NavLink activeClassName="active" to="/signin">
+              {/* {localStorage.clear()} */}
               Cerrar Sesion
             </NavLink>
           </Menu.Item>
-          <Menu.Item key="8">
-            <NavLink activeClassName="active" to={`/userProfile/`+activeuser}>
+          <Menu.Item style={{ background: "#31C8F8" }} key="8">
+            <NavLink activeClassName="active" to={`/userProfile/` + activeuser}>
               Mi perfil
             </NavLink>
           </Menu.Item>

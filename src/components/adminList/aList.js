@@ -1,9 +1,9 @@
-import React from 'react'
+import React from "react";
 import "./index.css";
-import { List, message, Avatar, Spin } from 'antd';
-import reqwest from 'reqwest';
-import InfiniteScroll from 'react-infinite-scroller';
-
+import { List, message, Avatar, Spin } from "antd";
+import reqwest from "reqwest";
+import InfiniteScroll from "react-infinite-scroller";
+import { Link } from "react-router-dom";
 
 class AssistList extends React.Component {
   state = {
@@ -11,8 +11,6 @@ class AssistList extends React.Component {
     loading: false,
     hasMore: true,
   };
-
-
 
   handleInfiniteOnLoad = () => {
     let { data } = this.state;
@@ -26,7 +24,7 @@ class AssistList extends React.Component {
       });
       return;
     }
-    this.fetchData(res => {
+    this.fetchData((res) => {
       data = data.concat(res.results);
       this.setState({
         data,
@@ -48,13 +46,11 @@ class AssistList extends React.Component {
           <List
             header={<div className="header">Administradores</div>}
             dataSource={this.state.data}
-            renderItem={item => (
+            renderItem={(item) => (
               <List.Item key={item.id}>
                 <List.Item.Meta
-                  avatar={
-                    <Avatar src={item.photo} />
-                  }
-                  title={<a href={item.href}>{item.name}</a>}
+                  avatar={<Avatar src={item.photo} />}
+                  title={<Link to={item.href}>{item.name}</Link>}
                 />
               </List.Item>
             )}

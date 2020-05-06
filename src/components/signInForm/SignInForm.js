@@ -1,10 +1,11 @@
 import React from "react";
 import "antd/dist/antd.css";
 import { Form, Input, Button, Checkbox, Typography, Alert } from "antd";
-import  { UserOutlined, LockOutlined} from "@ant-design/icons";
+import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import Spinner from "../../components/spinner";
 import { Link } from "react-router-dom";
 import "./index.css";
+import EventumIcon from "../../assets/icons/eventumIcon.png";
 
 const { Title } = Typography;
 
@@ -12,11 +13,9 @@ const SignInForm = (props) => {
   const { onFinish, getFieldDecorator, error, pending } = props;
 
   return (
-    <Form 
-      onFinish={onFinish} 
-      className="login-form"
-    >
+    <Form onFinish={onFinish} className="login-form">
       <div className="center-text">
+        <img src={EventumIcon} style={{ height: 100 }} />
         <Title level={2}>Inicia Sesión</Title>
       </div>
       <Form.Item
@@ -29,9 +28,9 @@ const SignInForm = (props) => {
           },
         ]}
       >
-        <Input 
-          prefix={<UserOutlined className="site-form-item-icon" />} 
-          placeholder="email" 
+        <Input
+          prefix={<UserOutlined className="site-form-item-icon" />}
+          placeholder="email"
         />
       </Form.Item>
       <Form.Item
@@ -76,6 +75,3 @@ const SignInForm = (props) => {
 };
 
 export default SignInForm;
-
-
-
