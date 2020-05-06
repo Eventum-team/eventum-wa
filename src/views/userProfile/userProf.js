@@ -5,67 +5,66 @@ import UserInfo from "../../components/userInfo";
 import EventoUsuario from "../../components/eventosUsuario";
 import GrupoUsuario from "../../components/gruposUsuario";
 import ContentLayout from "../../components/contentLayout";
-import { Layout } from 'antd';
-import { Row, Col, Avatar } from 'antd';
-import gql from 'graphql-tag';
-import {useQuery} from "@apollo/react-hooks";
+import { Layout } from "antd";
+import { Row, Col, Avatar } from "antd";
+import gql from "graphql-tag";
+import { useQuery } from "@apollo/react-hooks";
 import Spinner from "../../components/spinner";
+import "./index.css";
 
 //GRAPHQL
 const GET_USER_PROFILE = gql`
-query getUserProfile($userId: Int!) {
-  userProfile(userId: $userId){
-    id
-    name
-    career
-    age
-    phone_number
-    photo
-    groupsFollowing{
-      id_group
-      id_type
-      type
-      name
-      description
-      photo
-    }
-    eventsCreated {
+  query getUserProfile($userId: Int!) {
+    userProfile(userId: $userId) {
       id
       name
-      description
+      career
+      age
+      phone_number
       photo
+      groupsFollowing {
+        id_group
+        id_type
+        type
+        name
+        description
+        photo
+      }
+      eventsCreated {
+        id
+        name
+        description
+        photo
+      }
     }
   }
-}
 `;
-
-
-
 
 const UserProfile = ({ match }) => {
   //PRUEBA PARA grupos
-  const uId=match.params.id
+  const uId = match.params.id;
   const { loading, error, data } = useQuery(GET_USER_PROFILE, {
     variables: {
       userId: parseInt(uId),
-    }
+    },
   });
   //https://source.unsplash.com/random
-  var profilePhoto = 'https://source.unsplash.com/random'
-  if (!loading){
-    if (data.userProfile.photo!=null){
+  var profilePhoto = "https://source.unsplash.com/random";
+  if (!loading) {
+    if (data.userProfile.photo != null) {
       profilePhoto = data.userProfile.photo;
     }
   }
   const grList = [];
-  if (!loading){
+  if (!loading) {
     for (let i = 0; i < data.userProfile.groupsFollowing.length; i++) {
-      var groupPhoto = 'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png'
-      if (data.userProfile.groupsFollowing[i].photo!=null){
+      var groupPhoto =
+        "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png";
+      if (data.userProfile.groupsFollowing[i].photo != null) {
         groupPhoto = data.userProfile.groupsFollowing[i].photo;
       }
       grList.push({
-        href: `/groupProfile/${data.userProfile.groupsFollowing[i].id_group}`,//'/rutagrupos/'+data.userProfile.groupsFollowing[i].id_group,
+        href: `/groupProfile/${data.userProfile.groupsFollowing[i].id_group}`, //'/rutagrupos/'+data.userProfile.groupsFollowing[i].id_group,
         name: data.userProfile.groupsFollowing[i].name,
         picture: groupPhoto,
         description: data.userProfile.groupsFollowing[i].description,
@@ -74,44 +73,48 @@ const UserProfile = ({ match }) => {
   }
   //PRUEBA PARA eventos
   const evList = [];
-  if (!loading){
+  if (!loading) {
     for (let i = 0; i < data.userProfile.eventsCreated.length; i++) {
-      var eventPhoto = "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-      if (data.userProfile.eventsCreated[i].photo!=null){
+      var eventPhoto =
+        "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png";
+      if (data.userProfile.eventsCreated[i].photo != null) {
         eventPhoto = data.userProfile.eventsCreated[i].photo;
       }
       evList.push({
-        href: '/eventProfile/'+data.userProfile.eventsCreated[i].id,
+        href: "/eventProfile/" + data.userProfile.eventsCreated[i].id,
         name: data.userProfile.eventsCreated[i].name,
         picture: eventPhoto,
-        description:data.userProfile.eventsCreated[i].description,
+        description: data.userProfile.eventsCreated[i].description,
       });
     }
   }
-
 
   return (
     <div>
       {loading && <Spinner />}
       {!loading && (
-      <ContentLayout>
-        <Row>
-          <UserHeader name={data.userProfile.name} photo={profilePhoto}/>
-        </Row>
-        <Row>
-          <UserInfo name={data.userProfile.name} phone={data.userProfile.phone_number} age={data.userProfile.age} career={data.userProfile.career} />
-        </Row>
-        <Row>
-          <EventoUsuario data={evList} />
-        </Row>
-        <Row>
-          <GrupoUsuario data={grList} />
-        </Row>
-      </ContentLayout>
+        <ContentLayout>
+          <Row className="profileBackground">
+            <UserHeader name={data.userProfile.name} photo={profilePhoto} />
+          </Row>
+          <Row>
+            <UserInfo
+              name={data.userProfile.name}
+              phone={data.userProfile.phone_number}
+              age={data.userProfile.age}
+              career={data.userProfile.career}
+            />
+          </Row>
+          <Row style={{ marginBottom: 20 }}>
+            <EventoUsuario data={evList} />
+          </Row>
+          <Row style={{ marginBottom: 20 }}>
+            <GrupoUsuario data={grList} />
+          </Row>
+        </ContentLayout>
       )}
     </div>
   );
 };
-
 
 export default UserProfile;
