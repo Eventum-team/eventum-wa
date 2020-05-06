@@ -18,6 +18,8 @@ import CreateEvent from "../views/createEvent";
 // import CreateProfile from "../views/createProfile";
 // import NotFound from "../views/notFound";
 
+import Avatar from '../views/uploadPhotoTest';
+
 const routes = () => {
   return (
     <Routes>
@@ -36,6 +38,7 @@ const routes = () => {
           <Route exact path="/userProfile/:id" component={UserProfile} />
           <Route exact path="/createEvent" component={CreateEvent} />
           <Route exact path="/groupProfile/:id" component={GroupProfile} />
+          <Route exact path="/photo" component={Avatar} />
         </MainLayout>
         <Route component={SignIn} />
       </Switch>
