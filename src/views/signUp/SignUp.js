@@ -17,6 +17,7 @@ mutation UserAuthCreate(
   $phone_number: String!, 
   $age: Int!, 
   $career: String!
+  $photo: String!
 ){
   userAuthcreate(input:{
     username: $username
@@ -25,6 +26,7 @@ mutation UserAuthCreate(
     phone_number: $phone_number
     age: $age
     career: $career
+    photo: $photo
     status: "Ok"
   }){
     message
@@ -38,6 +40,7 @@ const SignUp = (props) => {
   // const dispatch = useDispatch();
   const [successful, setSuccessful] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [photoPath, setPhotoPath] = useState(null);
   const [signUpMutation, { loading}] = useMutation(SIGNUP_MUTATION, { errorPolicy: 'all' });
 
   function succesfulMessage() {
@@ -58,6 +61,11 @@ const SignUp = (props) => {
     });
   }
 
+  const useImageUrl = (photoUrl) => {
+    console.log(photoUrl);
+    setPhotoPath(photoUrl);
+  };
+
   const handleSubmit = async (values) => {
     console.log('Received values of form: ', values);
 
@@ -71,6 +79,7 @@ const SignUp = (props) => {
           phone_number: values.phone,
           age: parseInt(values.age),
           career: values.career,
+          photo: photoPath,
         } 
       });
 
@@ -92,7 +101,7 @@ const SignUp = (props) => {
 
   return (
     <div className="centerSignUp">
-      <SignUpForm handleSubmit={handleSubmit} pending={loading} error={errorMessage} />
+      <SignUpForm handleSubmit={handleSubmit} pending={loading} error={errorMessage} useImageUrl={useImageUrl} />
     </div>
   );
 };

@@ -13,12 +13,14 @@ import {
   Alert,
 } from "antd";
 import Spinner from "../../components/spinner";
+import PhotoLoader from '../photoLoader';
+
 
 const { Option } = Select;
 const { Title } = Typography;
 
 const SignUpForm = (props) => {
-  const { handleSubmit, showModal, error, pending } = props;
+  const { handleSubmit, showModal, error, pending, useImageUrl } = props;
   const [confirmDirty, setConfirmDirty] = useState(false);
 
   const handleConfirmBlur = (e) => {
@@ -65,6 +67,9 @@ const SignUpForm = (props) => {
       <Form {...formItemLayout} onFinish={handleSubmit} className="login-form">
         <div className="center-text">
           <Title level={2}>Registrate</Title>
+        </div>
+        <div>
+          <PhotoLoader onFinish={useImageUrl}/>
         </div>
         <Row type="" justify="" style={{ padding: "0 100px" }}>
           <Col>
