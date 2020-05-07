@@ -8,9 +8,9 @@ import EventumIcon from "../../assets/icons/eventumIcon.png";
 
 const { Header } = Layout;
 const { SubMenu } = Menu;
-const activeuser = parseInt(localStorage.getItem("userId"));
 
 const Navbar = () => {
+  const activeuser = parseInt(localStorage.getItem("userId"));
   return (
     <Header
       style={{
@@ -75,7 +75,6 @@ const Navbar = () => {
         >
           <Menu.Item style={{ background: "#31C8F8" }} key="7">
             <NavLink activeClassName="active" to="/signin">
-              {/* {localStorage.clear()} */}
               Cerrar Sesion
             </NavLink>
           </Menu.Item>
