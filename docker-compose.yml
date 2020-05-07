@@ -1,7 +1,7 @@
 version: '3'
 services: 
-    bodysoft-wa:
-        container_name: bodysoft-wa
+    ev-wa:
+        container_name: ev-wa
         build: .
         ports: 
             - '4000:4000'
