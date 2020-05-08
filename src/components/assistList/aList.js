@@ -1,70 +1,57 @@
-import React from "react";
+import React, { useState } from "react";
 import "./index.css";
 import { List, message, Avatar, Spin } from "antd";
 import reqwest from "reqwest";
 import InfiniteScroll from "react-infinite-scroller";
 
 import { Link } from "react-router-dom";
-class AssistList extends React.Component {
-  state = {
-    data: this.props.data,
-    loading: false,
-    hasMore: true,
-  };
+import { useQuery } from "@apollo/react-hooks";
 
-  handleInfiniteOnLoad = () => {
-    let { data } = this.state;
-    this.setState({
-      loading: true,
-    });
+const AssistList = (props) => {
+
+  const data = props.data
+  const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+
+  const handleInfiniteOnLoad = () => {
+    setLoading(true);
     if (data.length > 14) {
-      this.setState({
-        hasMore: false,
-        loading: false,
-      });
+      setLoading(false);
+      setHasMore(false);
       return;
     }
-    this.fetchData((res) => {
-      data = data.concat(res.results);
-      this.setState({
-        data,
-        loading: false,
-      });
-    });
   };
 
-  render() {
-    return (
-      <div className="demo-infinite-container">
-        <InfiniteScroll
-          initialLoad={false}
-          pageStart={0}
-          loadMore={this.handleInfiniteOnLoad}
-          hasMore={!this.state.loading && this.state.hasMore}
-          useWindow={false}
+  return (
+    <div className="demo-infinite-container">
+      <InfiniteScroll
+        initialLoad={false}
+        pageStart={0}
+        loadMore={handleInfiniteOnLoad}
+        hasMore={!loading && hasMore}
+        useWindow={false}
+      >
+        <List
+          header={<div className="header">Asistentes</div>}
+          dataSource={data}
+          renderItem={(item) => (
+            <List.Item key={item.id}>
+              <List.Item.Meta
+                avatar={<Avatar src={item.avatar} />}
+                title={<Link to={item.href}>{item.name}</Link>}
+              />
+            </List.Item>
+          )}
         >
-          <List
-            header={<div className="header">Asistentes</div>}
-            dataSource={this.state.data}
-            renderItem={(item) => (
-              <List.Item key={item.id}>
-                <List.Item.Meta
-                  avatar={<Avatar src={item.avatar} />}
-                  title={<Link to={item.href}>{item.name}</Link>}
-                />
-              </List.Item>
-            )}
-          >
-            {this.state.loading && this.state.hasMore && (
-              <div className="demo-loading-container">
-                <Spin />
-              </div>
-            )}
-          </List>
-        </InfiniteScroll>
-      </div>
-    );
-  }
+          {loading && hasMore && (
+            <div className="demo-loading-container">
+              <Spin />
+            </div>
+          )}
+        </List>
+      </InfiniteScroll>
+    </div>
+  );
 }
 
 export default AssistList;

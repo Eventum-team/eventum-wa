@@ -80,7 +80,6 @@ const EventCard = (props) => {
           event_id: values.eventID,
         }
       });
-      setSuccessful(true);
     } catch(e){
       console.log({e});
       console.log(e.graphQLErrors); // Aqui estan los errores que mandamos, es una arreglo
@@ -98,7 +97,6 @@ const EventCard = (props) => {
           eventId: values.eventID,
         }
       });
-      setSuccessful(true);
     } catch(e){
       console.log({e});
       console.log(e.graphQLErrors); // Aqui estan los errores que mandamos, es una arreglo
@@ -108,10 +106,12 @@ const EventCard = (props) => {
     }
   }
   useEffect(() => {
-    if (!loading && successful) {
-      history.go("/eventProfile/")
+    if (!loading) {
+      console.log("AFTER IRE");
+      
+      props.refetchProfile();
     }
-  }, [successful]);
+  },);
 
   // <button onClick={(e) => {this.validateNote(); this.props.history.push(`/board/${this.props.match.params.user}`);}}>
   //href={'/eventProfile/'+eventID}

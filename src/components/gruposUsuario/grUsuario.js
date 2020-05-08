@@ -12,15 +12,17 @@ import { List, Avatar, Space, Card, Button } from "antd";
 import { Link } from "react-router-dom";
 const { Meta } = Card;
 const GrupoUsuario = (props) => {
+  const isActiveUser = props.isActiveUser;
   return (
     <Card
       title="Mis Grupos"
       style={{ width: "100%" }}
       extra={
         <div>
-          <Link to="/createGroup">
+          {isActiveUser && <Link to="/createGroup">
             <Button type="primary" shape="circle" icon={<PlusOutlined />} />
           </Link>
+          }
         </div>
       }
     >

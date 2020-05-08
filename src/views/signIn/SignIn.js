@@ -4,7 +4,6 @@ import SignInForm from "../../components/signInForm";
 import "./index.css";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
-import store from "../../data/redux/store";
 import {
   addUserId,
   addAccessToken,
@@ -28,6 +27,7 @@ const USERID_MUTATION = gql`
 
 const SignIn = (props) => {
   const history = useHistory();
+  const dispatch = useDispatch();
   const [successful, setSuccessful] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [signInMutation, { loading }] = useMutation(SIGNIN_MUTATION, {
@@ -56,9 +56,9 @@ const SignIn = (props) => {
           token: data.logUser.access,
         },
       });
-      store.dispatch(addUserId());
-      localStorage.setItem("userId", idUser.data.vrfTok);
-
+      dispatch(addUserId(idUser.data.vrfTok));
+      dispatch(addAccessToken(data.logUser.access));
+      dispatch(addRefreshToken(data.logUser.refresh));
       setSuccessful(true);
     } catch (e) {
       console.log({ e });

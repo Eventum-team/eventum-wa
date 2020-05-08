@@ -17,9 +17,10 @@ const initialState = {
 function eventumApp(state = initialState, action) {
     switch (action.type) {
         case ADD_USER_ID:
-            return Object.assign({}, state, {
-                userId: action.id
-            });
+            return {
+                ...state,
+                userId: action.userId
+            }
         case ADD_ACCESS_TOKEN:
             return Object.assign({}, state, {
                 access: action.access
@@ -30,11 +31,11 @@ function eventumApp(state = initialState, action) {
             });
         case ADD_GROUP_ID:
             return Object.assign({}, state, {
-                groupId: action.id
+                groupId: action.groupId
             });
         case ADD_EVENT_ID:
             return Object.assign({}, state, {
-                eventId: action.id
+                eventId: action.eventId
             });
         default:
             return state;

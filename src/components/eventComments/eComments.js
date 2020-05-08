@@ -33,6 +33,7 @@ const EventComments = (props) => {
   const [successful, setSuccessful] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [onAsistHandler, { loading, error }] = useMutation(CREATE_COMMENT_MUTATION, { errorPolicy: 'all' })
+  const [form] = Form.useForm();
   const IconText = ({ icon, text }) => (
     <Space>
       {React.createElement(icon)}
@@ -49,20 +50,25 @@ const EventComments = (props) => {
           name: props.name,
         }
       });
-      setSuccessful(true);
+      form.resetFields();
+      //setSuccessful(true);
     } catch(e){
       console.log({e});
       console.log(e.graphQLErrors); // Aqui estan los errores que mandamos, es una arreglo
-      const errorPromt = e.graphQLErrors[0].message.detail; // mensaje
+      // const errorPromt = e.graphQLErrors[0].message.detail; // mensaje
       // console.log(e.graphQLErrors[0].status); // status
-      setErrorMessage(errorPromt);
+      // setErrorMessage(errorPromt);
     }
   }
+  
+  
   useEffect(() => {
-    if (!loading && successful) {
-      history.go("/eventProfile/")
+    if (!loading ) {
+      props.refetchProfile();
     }
-  }, [successful]);
+  }, );
+
+
   return (
     <div className="commentsBox">
       <List
@@ -87,6 +93,7 @@ const EventComments = (props) => {
         </List.Item>
       )}/>
       <Form
+        form={form}
         onFinish={onFinish}
       >
         <Form.Item
@@ -96,6 +103,7 @@ const EventComments = (props) => {
           ]}
         >
           <Input
+            allowClear
             placeholder="Comentario"
           />
         </Form.Item>

@@ -12,15 +12,16 @@ import { List, Avatar, Space, Card, Button } from "antd";
 import { Link } from "react-router-dom";
 const { Meta } = Card;
 const EventoUsuario = (props) => {
+  const isActiveUser = props.isActiveUser;
   return (
     <Card
       title="Mis Eventos"
       style={{ width: "100%" }}
       extra={
         <div>
-          <Link to="/createEvent">
+          {isActiveUser && <Link to="/createEvent">
             <Button type="primary" shape="circle" icon={<PlusOutlined />} />
-          </Link>
+          </Link>}
         </div>
       }
     >

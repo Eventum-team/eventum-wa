@@ -5,12 +5,13 @@ import Icon from "@ant-design/icons";
 import { NavLink } from "react-router-dom";
 import "./index.css";
 import EventumIcon from "../../assets/icons/eventumIcon.png";
+import {  useSelector } from "react-redux";
 
 const { Header } = Layout;
 const { SubMenu } = Menu;
 
 const Navbar = () => {
-  const activeuser = parseInt(localStorage.getItem("userId"));
+  const activeuser = useSelector(state => state.userId);
   return (
     <Header
       style={{

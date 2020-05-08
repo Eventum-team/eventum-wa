@@ -1,16 +1,16 @@
-import React from "react";
+import React, {useEffect}from "react";
 import EventMap from "../../components/map";
 import UserHeader from "../../components/userHeader";
 import UserInfo from "../../components/userInfo";
 import EventoUsuario from "../../components/eventosUsuario";
 import GrupoUsuario from "../../components/gruposUsuario";
 import ContentLayout from "../../components/contentLayout";
-import { Layout } from "antd";
 import { Row, Col, Avatar } from "antd";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import Spinner from "../../components/spinner";
 import "./index.css";
+import {  useSelector } from "react-redux";
 
 //GRAPHQL
 const GET_USER_PROFILE = gql`
@@ -43,11 +43,16 @@ const GET_USER_PROFILE = gql`
 const UserProfile = ({ match }) => {
   //PRUEBA PARA grupos
   const uId = match.params.id;
-  const { loading, error, data } = useQuery(GET_USER_PROFILE, {
+  const activeuser = useSelector(state => state.userId);
+  const isActiveUser = uId == activeuser;
+
+  const { loading, error, data, refetch } = useQuery(GET_USER_PROFILE, {
     variables: {
       userId: parseInt(uId),
     },
   });
+
+
   //https://source.unsplash.com/random
   var profilePhoto = "https://source.unsplash.com/random";
   if (!loading) {
@@ -89,6 +94,12 @@ const UserProfile = ({ match }) => {
     }
   }
 
+  useEffect(() => {
+    refetch();
+  }, []);
+
+  
+
   return (
     <div>
       {loading && <Spinner />}
@@ -106,10 +117,10 @@ const UserProfile = ({ match }) => {
             />
           </Row>
           <Row style={{ marginBottom: 20 }}>
-            <EventoUsuario data={evList} />
+            <EventoUsuario data={evList} isActiveUser={isActiveUser}/>
           </Row>
           <Row style={{ marginBottom: 20 }}>
-            <GrupoUsuario data={grList} />
+            <GrupoUsuario data={grList} isActiveUser={isActiveUser}/>
           </Row>
         </ContentLayout>
       )}

@@ -46,13 +46,14 @@ const GET_USER_NAME = gql`
     }
   }
 `;
+
 const activeuser = parseInt(localStorage.getItem("userId"));
 
 //https://source.unsplash.com/random
 const EventProfile = ({ match }) => {
   const evId = match.params.id;
 
-  const { loading, error, data } = useQuery(EVENT_PROFILE_QUERY, {
+  const { loading, error, data , refetch} = useQuery(EVENT_PROFILE_QUERY, {
     variables: {
       eventId: evId,
       userId: activeuser,
@@ -98,6 +99,8 @@ const EventProfile = ({ match }) => {
         name: data.eventProfile.assistant[i].name,
         avatar: photo,
       });
+      console.log(aList);
+      
     }
   }
   if (!load) {
@@ -117,6 +120,11 @@ const EventProfile = ({ match }) => {
     }
   }
 
+
+  const refetchProfile = () => {
+    refetch();
+  };
+
   return (
     <div>
       {load && <Spinner />}
@@ -134,6 +142,7 @@ const EventProfile = ({ match }) => {
                 asist={evAsist}
                 actUser={activeuser}
                 eventID={evId}
+                refetchProfile={refetchProfile}
               />
             </Row>
             <Row>
@@ -144,7 +153,9 @@ const EventProfile = ({ match }) => {
                 />
               </Col>
               <Col flex={2}>
-                <AssistList data={aList} />
+                <AssistList 
+                  data={aList} 
+                  />
               </Col>
             </Row>
             <Row>
@@ -154,6 +165,7 @@ const EventProfile = ({ match }) => {
                 data={commentList}
                 ide={evId}
                 pending={loading}
+                refetchProfile={refetchProfile}
               />
             </Row>
           </ContentLayout>

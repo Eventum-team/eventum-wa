@@ -13,7 +13,7 @@ export const ADD_EVENT_ID = 'ADD_EVENT_ID'
  */
 
 export function addUserId(id) {
-  return { type: ADD_USER_ID, id };
+  return { type: ADD_USER_ID, userId: id };
 }
 
 export function addAccessToken(access) {
@@ -25,10 +25,10 @@ export function addRefreshToken(refresh) {
 }
 
 export function addGroupId(id) {
-  return { type: ADD_GROUP_ID, id };
+  return { type: ADD_GROUP_ID, groupId: id };
 }
 
 export function addEventId(id) {
-  return { type: ADD_EVENT_ID, id };
+  return { type: ADD_EVENT_ID, eventId: id };
 }
 
