@@ -1,20 +1,13 @@
 import React from "react";
 import "antd/dist/antd.css";
 import { Form, Select, Input, Button, DatePicker } from "antd";
+import PhotoLoader from "../photoLoader";
+
 
 const { Option } = Select;
 
-const prefixSelector = (
-  <Form.Item name="prefix" noStyle>
-    <Select style={{ width: 70 }}>
-      <Option value="01">+01</Option>
-      <Option value="54">+54</Option>
-    </Select>
-  </Form.Item>
-);
-
 const CreateGroup = (props) => {
-  const { handleSubmit, groupTypes } = props;
+  const { handleSubmit, groupTypes , useImageUrl} = props;
 
   return (
       <Form
@@ -44,7 +37,7 @@ const CreateGroup = (props) => {
           labelAlign="right"
           labelCol={{ span: 6 }}
           wrapperCol={{ span: 24, offset: 0 }}
-          rules={[{ required: true, message: "Ingresa un nombre" }]}
+          rules={[{ required: true, message: "Ingresa un nombre, maximo 30 caracteres", max: 30 }]}
           name="groupName"
         >
           <Input />
@@ -53,7 +46,7 @@ const CreateGroup = (props) => {
           label="Descripcion"
           wrapperCol={{ span: 24, offset: 0 }}
           name="description"
-          rules={[{ required: true, message: "Ingresa una descripcion" }]}
+          rules={[{ required: true, message: "Ingresa una descripcion, maximo 100 caracteres" , max:100}]}
         >
           <Input />
         </Form.Item>
@@ -63,10 +56,14 @@ const CreateGroup = (props) => {
           labelAlign="left"
           labelCol={{ span: 6 }}
           labelAlign="right"
+          rules={[{message: "Numero celular debe tener 10 caracteres", len:10}]}
           wrapperCol={{ span: 24, offset: 0 }}
         >
-          <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
+          <Input style={{ width: '100%' }} />
         </Form.Item>
+        <div style={{ justifyContent: "center", display: "flex" }}>
+          <PhotoLoader onFinish={useImageUrl} />
+        </div>
         <Form.Item
           type="flex"
           labelAlign="center"

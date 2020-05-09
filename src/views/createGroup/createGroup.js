@@ -23,29 +23,19 @@ query {
 }
 `;
 
-/*** 
-const EVENT_MUTATION = gql`
-mutation {
-  createEvent(
+const GET_REFRESH_TOKEN = gql`
+mutation RefreshTok(
+  $refresh: String!
+){
+  refreshTok(
     input:{
-      ownerId: 1
-      ownerType: "user"
-      name: "test event"
-      eventStartDate: "2020-04-20T06:00:00Z"
-      eventFinishDate: "2020-04-20T06:00:00Z"
-      description: "desc"
-      latitude: "1"
-      longitude: "2"
-      status: "Ok"
-      eventType: "official"
-      url: "some url"
-    }
-  ){
-    message
-    status
+      refresh: $refresh
+    })
+  {
+    	access
   }
 }
-`;*/
+`;
 
 
 const CREATE_GROUP_MUTATION = gql`
@@ -56,7 +46,8 @@ mutation CreateNewGroup(
   $contact_number: String!,
   $status: String!,
   $token: String!,
-  $id_user: ID!,
+  $photo: String!
+  $id_user: ID!
 ){
   createNewGroup(
     id_user: $id_user
@@ -66,6 +57,7 @@ mutation CreateNewGroup(
       description: $description
       contact_number: $contact_number
       status: $status
+      photo: $photo
     }
     token: {
       token: $token
@@ -77,11 +69,12 @@ mutation CreateNewGroup(
 `;
     
 const CreateGroup = (props) => {
-  // const dispatch = useDispatch();
+  const [photoPath, setPhotoPath] = useState("");
   const [successful, setSuccessful] = useState(false);
   const { loading, error, data } = useQuery(GROUP_TYPES_QUERY);
   const [createGroupMutation, { loadingCreate}] = useMutation(CREATE_GROUP_MUTATION, { errorPolicy: 'all' });
-  const userId =  localStorage.getItem('userId');
+  
+  const userId =  useSelector(state => state.userId);
 
   const handleSubmit = (values) => {
     console.log(values);
@@ -93,13 +86,16 @@ const CreateGroup = (props) => {
         contact_number: values.phone,
         status: "Ok",
         token: "token",
+        photo: photoPath,
         id_user: parseInt(userId)
       }
     });
     setSuccessful(true);
   };
 
-  console.log(data);
+  const useImageUrl = (photoUrl) => {
+    setPhotoPath(photoUrl);
+  };
 
   // {!loading && error && <ErrorAlert error={error} />}
   return (
@@ -120,7 +116,7 @@ const CreateGroup = (props) => {
           </Title>
           <Row>
             <Col span={12} style={{ padding: "0 100px" }}>
-              <CreateGroupForm handleSubmit={handleSubmit} groupTypes={data} />
+              <CreateGroupForm handleSubmit={handleSubmit} groupTypes={data} useImageUrl={useImageUrl}/>
             </Col>
             <Col span={12}>
               <div>

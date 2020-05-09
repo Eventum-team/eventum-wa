@@ -146,6 +146,7 @@ const SignUpForm = (props) => {
               name="phone"
               label="Numero Celular"
               labelAlign="left"
+              rules={[{message: "Numero celular debe tener 10 caracteres" , len:10}]}
             >
               <Input style={{ width: "100%" }} />
             </Form.Item>

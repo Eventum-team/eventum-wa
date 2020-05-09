@@ -58,7 +58,7 @@ const CreateGroup = (props) => {
   // const dispatch = useDispatch();
   const [successful, setSuccessful] = useState(false);
   const [createEventMutation, { loading}] = useMutation(CREATE_EVENT_MUTATION, { errorPolicy: 'all' });
-  const userId =  localStorage.getItem('userId');
+  const userId = useSelector(state => state.userId);
 
   const handleSubmit = (values) => {
     console.log(values);

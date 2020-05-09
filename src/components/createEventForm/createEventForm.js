@@ -5,17 +5,6 @@ import { Form, Select, Input, Button, DatePicker } from "antd";
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 
-
-
-const prefixSelector = (
-  <Form.Item name="prefix" noStyle>
-    <Select style={{ width: 70 }}>
-      <Option value="01">+01</Option>
-      <Option value="54">+54</Option>
-    </Select>
-  </Form.Item>
-);
-
 const CreateEvent = (props) => {
   const { handleSubmit } = props;
 
@@ -52,16 +41,6 @@ const CreateEvent = (props) => {
           rules={[{ required: true, message: "Ingresa una fecha" }]}
         >
           <RangePicker showTime />
-        </Form.Item>
-        <Form.Item
-          name="phone"
-          label="Numero de celular"
-          labelAlign="left"
-          labelCol={{ span: 6 }}
-          labelAlign="right"
-          wrapperCol={{ span: 24, offset: 0 }}
-        >
-          <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
         </Form.Item>
         <Form.Item
           type="flex"

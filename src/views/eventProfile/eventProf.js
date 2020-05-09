@@ -10,6 +10,7 @@ import { Row, Col, Avatar } from "antd";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import Spinner from "../../components/spinner";
+import { useDispatch, useSelector } from "react-redux";
 //updateUserEvent(userId: Int, eventId: Int, input: UserEventInputUpdate): Message!
 //deleteUserEvent(userId: Int, eventId: Int): Message!
 //GRAPHQL
@@ -47,11 +48,12 @@ const GET_USER_NAME = gql`
   }
 `;
 
-const activeuser = parseInt(localStorage.getItem("userId"));
 
 //https://source.unsplash.com/random
 const EventProfile = ({ match }) => {
   const evId = match.params.id;
+  const activeuser = parseInt(useSelector(state => state.userId));
+  console.log(activeuser)
 
   const { loading, error, data , refetch} = useQuery(EVENT_PROFILE_QUERY, {
     variables: {

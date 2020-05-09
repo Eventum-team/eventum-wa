@@ -40,7 +40,7 @@ const SignUp = (props) => {
   // const dispatch = useDispatch();
   const [successful, setSuccessful] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
-  const [photoPath, setPhotoPath] = useState(null);
+  const [photoPath, setPhotoPath] = useState("");
   const [signUpMutation, { loading}] = useMutation(SIGNUP_MUTATION, { errorPolicy: 'all' });
 
   function succesfulMessage() {
