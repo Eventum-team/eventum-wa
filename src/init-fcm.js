@@ -11,7 +11,7 @@ const initializedFirebaseApp = firebase.initializeApp({
     measurementId: "G-JCQPHX0Q2B"
   });
 const messaging = initializedFirebaseApp.messaging();
-messaging.usePublicVapidKey("AIzaSyBzM3_mkvUv5P5RnVV082erwIjvd2KtYgk");
+messaging.usePublicVapidKey("BGJG5yIgk8EigOpDaKNXwaBJfGlhq9xqCiaNuZABk-FmGCZmz3x_uADj4Yb-a36QVJdPSbXoqdZLz-OKSpVYHZE");
 
 
 export { messaging };

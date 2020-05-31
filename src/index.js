@@ -37,24 +37,25 @@ async function componentDidMount() {
     navigator.serviceWorker.addEventListener("message", (message) => console.log(message));
 }
 
-/*messaging.getToken().then((currentToken) => {
+messaging.getToken().then((currentToken) => {
   if (currentToken) {
-    sendTokenToServer(currentToken);
-    updateUIForPushEnabled(currentToken);
+    //sendTokenToServer(currentToken);
+    //updateUIForPushEnabled(currentToken);
+    console.log("token:", currentToken);
   } else {
     // Show permission request.
     console.log('No Instance ID token available. Request permission to generate one.');
     // Show permission UI.
-    updateUIForPushPermissionRequired();
-    setTokenSentToServer(false);
+    //updateUIForPushPermissionRequired();
+    //setTokenSentToServer(false);
   }
 }).catch((err) => {
   console.log('An error occurred while retrieving token. ', err);
-  showToken('Error retrieving Instance ID token. ', err);
-  setTokenSentToServer(false);
+  //showToken('Error retrieving Instance ID token. ', err);
+  //setTokenSentToServer(false);
 });
 
-messaging.onTokenRefresh(() => {
+/*messaging.onTokenRefresh(() => {
   messaging.getToken().then((refreshedToken) => {
     console.log('Token refreshed.');
     // Indicate that the new Instance ID token has not yet been sent to the
