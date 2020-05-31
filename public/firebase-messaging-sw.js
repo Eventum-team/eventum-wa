@@ -11,10 +11,18 @@ const firebaseConfig = {
     appId: "1:157313059737:web:b00650f178ee631dd7a108",
     measurementId: "G-JCQPHX0Q2B"
   };
-  
+
 firebase.initializeApp(firebaseConfig);
 const messaging = firebase.messaging();
+
+messaging.onMessage((payload) => {
+    console.log('Message received. ', payload);
+
+  });
+
 messaging.setBackgroundMessageHandler(function(payload) {
+    console.log('[firebase-messaging-sw.js] Received background message ', payload);
+
      const promiseChain = clients
           .matchAll({
                type: "window",
