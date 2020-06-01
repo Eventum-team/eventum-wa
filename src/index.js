@@ -15,17 +15,6 @@ Notification.requestPermission().then((permission) => {
   }
 });
 
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker
-    .register("./firebase-messaging-sw.js")
-    .then(function(registration) {
-      console.log("Registration successful, scope is:", registration.scope);
-    })
-    .catch(function(err) {
-      console.log("Service worker registration failed, error:", err);
-    });
-}
-
 async function componentDidMount() {
   messaging.requestPermission()
     .then(async function() {
@@ -55,22 +44,25 @@ messaging.getToken().then((currentToken) => {
   //setTokenSentToServer(false);
 });
 
-/*messaging.onTokenRefresh(() => {
+messaging.onTokenRefresh(() => {
   messaging.getToken().then((refreshedToken) => {
-    console.log('Token refreshed.');
+    console.log('Token refreshed as:', refreshedToken);
     // Indicate that the new Instance ID token has not yet been sent to the
     // app server.
-    setTokenSentToServer(false);
+    //setTokenSentToServer(false);
     // Send Instance ID token to app server.
-    sendTokenToServer(refreshedToken);
+    //sendTokenToServer(refreshedToken);
     // ...
   }).catch((err) => {
     console.log('Unable to retrieve refreshed token ', err);
-    showToken('Unable to retrieve refreshed token ', err);
+    //showToken('Unable to retrieve refreshed token ', err);
   });
-});*/
+});
 
-navigator.serviceWorker.addEventListener("message", (message) => console.log(message));
+messaging.onMessage((payload) => {
+  console.log('Message received. ', payload);
+
+});
 
 ReactDOM.render(
   <React.StrictMode>
