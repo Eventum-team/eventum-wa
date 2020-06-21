@@ -1,5 +1,6 @@
-const ipApi = '190.24.19.228'; // 190.24.19.228 o localhost
-const portApi = '5000'; 
+
+const ipApi = "ev-api-service-clusterip";
+const portApi = "5000";
 
 
 export const ipApiGetway = `http://${ipApi}:${portApi}/graphql`;

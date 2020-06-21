@@ -26,7 +26,7 @@ const routes = () => {
       <Switch>
         {/* afuera del MainLayout para que no tengan navbar o footer */}
         <Route exact path="/signin" component={SignIn} />
-        <Route exact path="/" component={SignIn} />
+        <Route exact path="/" component={CreateEvent} />
         <Route exact path="/signup" component={SignUp} />
         <MainLayout>
           {/* <Redirect exact from="/" to="home" /> */}
@@ -40,7 +40,7 @@ const routes = () => {
           <Route exact path="/groupProfile/:id" component={GroupProfile} />
           <Route exact path="/photo" component={Avatar} />
         </MainLayout>
-        <Route component={SignIn} />
+        <Route component={CreateEvent} />
       </Switch>
     </Routes>
   );
