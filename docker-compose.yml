@@ -1,7 +1,10 @@
-version: '3'
-services: 
-    ev-wa:
-        container_name: ev-wa
-        build: .
-        ports: 
-            - '4000:4000'
+version: "3"
+services:
+  ev-wa:
+    container_name: ev-wa
+    build: .
+    environment:
+      - REACT_APP_API_PORT=${REACT_APP_API_PORT}
+      - REACT_APP_API_IP=${REACT_APP_API_IP}
+    ports:
+      - "4000:4000"
